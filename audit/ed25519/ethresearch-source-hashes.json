@@ -1,0 +1,51 @@
+[
+  {
+    "url": "https://ethresear.ch/t/fake-glv-you-dont-need-an-efficient-endomorphism-to-implement-glv-like-scalar-multiplication-in-snark-circuits/20394",
+    "title": "Fake GLV: You don't need an efficient endomorphism to implement GLV-like scalar multiplication in SNARK circuits",
+    "retrieved_utc": "2026-10-11T20:27:10.050716+00:00",
+    "sha256_json": "2f2b2fafd411e37edfc9ef0bb2eb39c02ba1f6309dae02bb24822e8ac55ad7d5",
+    "posts": 10
+  },
+  {
+    "url": "https://ethresear.ch/t/simple-guide-to-fast-linear-combinations-aka-multiexponentiations/7238",
+    "title": "Simple guide to fast linear combinations (aka multiexponentiations)",
+    "retrieved_utc": "2026-10-11T20:27:10.383526+00:00",
+    "sha256_json": "81115acadbde7a5c559445f74dca930566782d80fc0cf60762b751e41d08e44c",
+    "posts": 3
+  },
+  {
+    "url": "https://ethresear.ch/t/surveying-precomputation-methods-in-cryptography-request-for-help/8606",
+    "title": "Surveying Precomputation Methods in Cryptography, Request for Help",
+    "retrieved_utc": "2026-10-11T20:27:10.737601+00:00",
+    "sha256_json": "5e5decbed9d01fa647fd2ec0aefab675d09953ca40e4cb73a0a15bbc7075399e",
+    "posts": 8
+  },
+  {
+    "url": "https://ethresear.ch/t/efficient-ecdsa-signature-verification-using-circom/13629",
+    "title": "Efficient ECDSA signature verification using Circom",
+    "retrieved_utc": "2026-10-11T20:27:11.107468+00:00",
+    "sha256_json": "8f17d3c1050a44f8cc702b4279fd351decb16d50ea4ef7979d6a7e8baf72f979",
+    "posts": 10
+  },
+  {
+    "url": "https://ethresear.ch/t/approaches-to-ibc-light-clients-via-snarks/17473",
+    "title": "Approaches to IBC light clients via SNARKs",
+    "retrieved_utc": "2026-10-11T20:27:11.379736+00:00",
+    "sha256_json": "909b959079893e922579636d4dfb0d965244e00739978f41699daff1ea1f6f74",
+    "posts": 5
+  },
+  {
+    "url": "https://ethresear.ch/t/bringing-ibc-to-ethereum-using-zk-snarks/13634",
+    "title": "Bringing IBC to Ethereum using ZK-Snarks",
+    "retrieved_utc": "2026-10-11T20:29:08.404695+00:00",
+    "sha256_json": "2ee448b4cf443c750813ce32fc9bac61f49bc15558d77e8caf6a36de91f77185",
+    "posts": 20
+  },
+  {
+    "url": "https://ethresear.ch/t/verify-ed25519-signatures-cheaply-on-eth-using-zk-snarks/13139",
+    "title": "Verify ed25519 signatures cheaply on Eth using ZK-Snarks",
+    "retrieved_utc": "2026-10-11T20:29:08.819637+00:00",
+    "sha256_json": "6e2af07bb33ae8b333a08bf089b702a4681c2deff99627d0f415482b633ba8b8",
+    "posts": 14
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "checked_utc": "2026-10-11T21:50:04.591632+00:00",
+  "command": "go test ./ed25519 -run '^$' -bench '^BenchmarkArithmeticProve$' -benchtime=5x -count=1",
+  "result": "pass; initial Groth16 proof verified, then five timed Prove calls",
+  "hardware": "Apple M5 Pro",
+  "goos": "darwin",
+  "goarch": "arm64",
+  "gomaxprocs": 18,
+  "constraints": 29786,
+  "prove_median_ms": 96.08,
+  "prove_mean_ns": 96748533,
+  "visibility": "32 public key bytes; signature and precomputed 64-byte challenge digest private; test-only boundary",
+  "comparison": {
+    "p256_raw_constraints": 30164,
+    "p256_raw_prove_median_ms": 105.7,
+    "p256_raw_runs": 5
+  },
+  "scope": "Arithmetic/encoding comparison only. Public Verify always computes SHA-512(R||A||M) in circuit. Both single arithmetic circuits use a 32768-point Groth16 domain; complete hash-inclusive verifiers are benchmarked separately."
+}

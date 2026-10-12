@@ -1,0 +1,93 @@
+{
+  "id": "circomlib-ed25519-adaptations-2026-10-11",
+  "source_repository": "/Users/jorrit/dev/experiments/circomlib",
+  "source_head": "35e54ea21da3e8762557234298dbb553c175ea8d",
+  "source_worktree": "clean",
+  "source_sha256": {
+    "circuits/babyjub.circom": "fdd45cd3edd59621c203d478218c1a623a03acdd4d5be997208310bc72df61ce",
+    "circuits/montgomery.circom": "63692077f57f4467960b172830abbeb4dfafdc3744cde6863433cccea7f0f2bf",
+    "circuits/escalarmulfix.circom": "32c3f23c33d6325156ba42ebcd83cd75f944ccb5fb4db042ddb9bec987b2c7e6",
+    "circuits/escalarmulany.circom": "a881382804dc0e0fde2784c6b6e507928b5e0f14bef927c50f4529c05d2fa9de",
+    "circuits/escalarmulw4table.circom": "c22dcc91ea7f363029ac9ee06c804868e0ccbcf0c58d6e0840b102a229fd1181",
+    "circuits/escalarmul.circom": "1c77bde2799351afcaf25a8bd813ecf0dc56e0304ed7e4128aa0c012cca45745"
+  },
+  "baseline_repository_head": "fdce0f9a469ba92f4422313f7290e69605fb8d89",
+  "baseline_snapshot": "/tmp/mola-circomexp.prOn0T",
+  "baseline_files": {
+    "ed25519/curve.go": "/tmp/mola-circom-curve.orig.go",
+    "ed25519/montgomery.go": "/tmp/mola-circom-mont.orig.go"
+  },
+  "experiments": [
+    {
+      "variant": "baseline",
+      "core": 30740,
+      "full32B": 53605
+    },
+    {
+      "variant": "cached constant-base T, per-coordinate selectors",
+      "core": 30687,
+      "full32B": 53552
+    },
+    {
+      "variant": "cached constant-base T, shared signed selector",
+      "core": 30676,
+      "full32B": 53541
+    },
+    {
+      "variant": "full BabyAdd beta/gamma/delta/tau factoring with beta/gamma reductions and removal of unused withT in add",
+      "core": 30989,
+      "full32B": 53853,
+      "decision": "rejected: foreign-field reductions cost more than native product savings"
+    },
+    {
+      "variant": "numerator beta/gamma/delta only, retaining cachedT denominator; shared signed correction",
+      "core": 30622,
+      "full32B": 53487
+    },
+    {
+      "variant": "also use cachedT/d for first root doubling",
+      "core": 30604,
+      "full32B": 53469,
+      "decision": "superseded by xy-root validation; branch omitted from finalpatch"
+    },
+    {
+      "variant": "root on-curve check via reduced xy and CRT square (xy)^2; final winning combination",
+      "core": 30522,
+      "full32B": 53387,
+      "decision": "validated candidate"
+    }
+  ],
+  "validation_commands": [
+    "go test ./ed25519 ./p256 ./p256/emfield -count=1",
+    "go test ./ed25519 -run ^(TestCoreCost|TestVerify)$ -count=1 -v"
+  ],
+  "validation_result": "all passed; all original subgroup proofs, final cubic assertion, native alias guards and SHA512 remain",
+  "scalar_analysis": "Circom EscalarMulAny explicitly assumes a nonzero subgroup point. Its assumption cannot replace the Ed25519 torsion split. Circom fixed3-bit positive windows need about85 windows for253bits versus37 signed7-bit windows here; segmentation and offset correction offer no evident operation-count win. Native BabyJub field costs are not Ed25519 nonnative costs.",
+  "patch": "/tmp/mola-circomexp.prOn0T/circom-inspired-core.patch",
+  "workspace_edits": false,
+  "additional_experiments": [
+    {
+      "variant": "reuse equal slope sum in lazy y",
+      "core": 30740,
+      "decision": "no row saving; retained existing source"
+    },
+    {
+      "variant": "Circom mux-inspired monomial selectors independently",
+      "core": 30550,
+      "full32B": 53415,
+      "saved": 190
+    },
+    {
+      "variant": "combined Circom curve and selector changes",
+      "core": 30332,
+      "full32B": 53197
+    },
+    {
+      "variant": "native canonical scalar gap",
+      "core": 30324,
+      "full32B": 53189,
+      "saved": 8
+    }
+  ],
+  "promotion": "Applied winning curve changes and monomial selectors. Exhaustive selectors through8bits and native canonical/fallback edge tests added; final entire module test suite and vet pass."
+}

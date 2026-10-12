@@ -1,0 +1,202 @@
+[
+  {
+    "repo": "succinctlabs/sp1",
+    "commit": "bfc27de3931d90bceb32eb42b922b0165f7f7bf0",
+    "path": "crates/core/machine/src/syscall/precompiles/edwards/ed_add.rs",
+    "url": "https://raw.githubusercontent.com/succinctlabs/sp1/bfc27de3931d90bceb32eb42b922b0165f7f7bf0/crates/core/machine/src/syscall/precompiles/edwards/ed_add.rs",
+    "sha256": "e026d5da70657b80f3ec81a2bc10ec975ffa3e265ce0ed237360fa7c528f68eb",
+    "bytes": 19436
+  },
+  {
+    "repo": "succinctlabs/sp1",
+    "commit": "bfc27de3931d90bceb32eb42b922b0165f7f7bf0",
+    "path": "crates/core/machine/src/syscall/precompiles/edwards/ed_decompress.rs",
+    "url": "https://raw.githubusercontent.com/succinctlabs/sp1/bfc27de3931d90bceb32eb42b922b0165f7f7bf0/crates/core/machine/src/syscall/precompiles/edwards/ed_decompress.rs",
+    "sha256": "6435c1d588fc1a04f87e212c0866beb0a6a4bb5b5700c8013dfbb417df04e073",
+    "bytes": 18752
+  },
+  {
+    "repo": "succinctlabs/sp1",
+    "commit": "bfc27de3931d90bceb32eb42b922b0165f7f7bf0",
+    "path": "crates/curves/src/edwards/ed25519.rs",
+    "url": "https://raw.githubusercontent.com/succinctlabs/sp1/bfc27de3931d90bceb32eb42b922b0165f7f7bf0/crates/curves/src/edwards/ed25519.rs",
+    "sha256": "a420e858ddb6a4d1b41cdfa3c6684cc63630860d0d66184194454d12f4ef8ae4",
+    "bytes": 6035
+  },
+  {
+    "repo": "succinctlabs/sp1",
+    "commit": "bfc27de3931d90bceb32eb42b922b0165f7f7bf0",
+    "path": "crates/curves/src/edwards/mod.rs",
+    "url": "https://raw.githubusercontent.com/succinctlabs/sp1/bfc27de3931d90bceb32eb42b922b0165f7f7bf0/crates/curves/src/edwards/mod.rs",
+    "sha256": "061c85bc75ae86c7188ba08890f37ac3ce094ff7fb21d5bd0d0847bfaabd8613",
+    "bytes": 9507
+  },
+  {
+    "repo": "succinctlabs/sp1",
+    "commit": "bfc27de3931d90bceb32eb42b922b0165f7f7bf0",
+    "path": "crates/curves/src/scalar_mul.rs",
+    "url": "https://raw.githubusercontent.com/succinctlabs/sp1/bfc27de3931d90bceb32eb42b922b0165f7f7bf0/crates/curves/src/scalar_mul.rs",
+    "sha256": "838419675761bcc230ba9970fd49fcb4dd39f3d6b7d5ccb341e3150e7254e3e5",
+    "bytes": 1306
+  },
+  {
+    "repo": "succinctlabs/sp1",
+    "commit": "bfc27de3931d90bceb32eb42b922b0165f7f7bf0",
+    "path": "crates/zkvm/lib/src/ed25519.rs",
+    "url": "https://raw.githubusercontent.com/succinctlabs/sp1/bfc27de3931d90bceb32eb42b922b0165f7f7bf0/crates/zkvm/lib/src/ed25519.rs",
+    "sha256": "34e94ba150f65a4a105b795000ef1169710cd5dc6ae2f1d16b58b1cf390658b4",
+    "bytes": 1661
+  },
+  {
+    "repo": "risc0/risc0",
+    "commit": "3bbcd44d6459b9ef6ac0df3846dc9215514934e8",
+    "path": "risc0/bigint2/src/ec/mod.rs",
+    "url": "https://raw.githubusercontent.com/risc0/risc0/3bbcd44d6459b9ef6ac0df3846dc9215514934e8/risc0/bigint2/src/ec/mod.rs",
+    "sha256": "067142a61e8ce9c4516adcd0c867ee85ea5158e15cc7e82b6839059566062f34",
+    "bytes": 14194
+  },
+  {
+    "repo": "risc0/risc0",
+    "commit": "3bbcd44d6459b9ef6ac0df3846dc9215514934e8",
+    "path": "risc0/bigint2/src/field/mod.rs",
+    "url": "https://raw.githubusercontent.com/risc0/risc0/3bbcd44d6459b9ef6ac0df3846dc9215514934e8/risc0/bigint2/src/field/mod.rs",
+    "sha256": "3c64781e3a4154fb9edff2b7d2358eb477e3a7e9eb99318f196bdc577602b702",
+    "bytes": 11880
+  },
+  {
+    "repo": "risc0/risc0",
+    "commit": "3bbcd44d6459b9ef6ac0df3846dc9215514934e8",
+    "path": "risc0/circuit/rv32im-sys/cxx/rv32im/circuit/bigint.ipp",
+    "url": "https://raw.githubusercontent.com/risc0/risc0/3bbcd44d6459b9ef6ac0df3846dc9215514934e8/risc0/circuit/rv32im-sys/cxx/rv32im/circuit/bigint.ipp",
+    "sha256": "81fc85633c73d9404e8ef3685785661678f49e73c41f89b9223edc9daf08e495",
+    "bytes": 4626
+  },
+  {
+    "repo": "risc0/risc0",
+    "commit": "3bbcd44d6459b9ef6ac0df3846dc9215514934e8",
+    "path": "risc0/circuit/rv32im-sys/cxx/rv32im/circuit/bigint.h",
+    "url": "https://raw.githubusercontent.com/risc0/risc0/3bbcd44d6459b9ef6ac0df3846dc9215514934e8/risc0/circuit/rv32im-sys/cxx/rv32im/circuit/bigint.h",
+    "sha256": "c15a5085550b8c98f9b8159dd1323613cfc9aa5953b4b6543b4613836ff26d37",
+    "bytes": 3158
+  },
+  {
+    "repo": "risc0/risc0",
+    "commit": "3bbcd44d6459b9ef6ac0df3846dc9215514934e8",
+    "path": "risc0/circuit/rv32im/src/execute/bigint/analyze.rs",
+    "url": "https://raw.githubusercontent.com/risc0/risc0/3bbcd44d6459b9ef6ac0df3846dc9215514934e8/risc0/circuit/rv32im/src/execute/bigint/analyze.rs",
+    "sha256": "d73e7ddb4979c831b377b30aa0a8f15b576704ca5fa78e1b32690c8360577aba",
+    "bytes": 5583
+  },
+  {
+    "repo": "risc0/risc0",
+    "commit": "3bbcd44d6459b9ef6ac0df3846dc9215514934e8",
+    "path": "examples/digital-signature/methods/guest/src/main.rs",
+    "url": "https://raw.githubusercontent.com/risc0/risc0/3bbcd44d6459b9ef6ac0df3846dc9215514934e8/examples/digital-signature/methods/guest/src/main.rs",
+    "sha256": "a52f49520b9be2e86cc963a0499567fff7ceac1614e3f15d2fc51b260feac47f",
+    "bytes": 1094
+  },
+  {
+    "repo": "elliottech/lighter-prover",
+    "commit": "579f3d15ce54096d2ed0305747312a42d2e68d84",
+    "path": "circuit/src/eddsa/schnorr.rs",
+    "url": "https://raw.githubusercontent.com/elliottech/lighter-prover/579f3d15ce54096d2ed0305747312a42d2e68d84/circuit/src/eddsa/schnorr.rs",
+    "sha256": "32cd85b6f444937e70d301b44977d48de75b0805ccd68988701b072a3233a78b",
+    "bytes": 18463
+  },
+  {
+    "repo": "elliottech/lighter-prover",
+    "commit": "579f3d15ce54096d2ed0305747312a42d2e68d84",
+    "path": "circuit/src/eddsa/schnorr_helper.rs",
+    "url": "https://raw.githubusercontent.com/elliottech/lighter-prover/579f3d15ce54096d2ed0305747312a42d2e68d84/circuit/src/eddsa/schnorr_helper.rs",
+    "sha256": "1043d6419936adf009aad8526805e68ae5894f828bfe3be029b36045ddedddcf",
+    "bytes": 5602
+  },
+  {
+    "repo": "elliottech/lighter-prover",
+    "commit": "579f3d15ce54096d2ed0305747312a42d2e68d84",
+    "path": "circuit/src/ecdsa/curve/curve_adds.rs",
+    "url": "https://raw.githubusercontent.com/elliottech/lighter-prover/579f3d15ce54096d2ed0305747312a42d2e68d84/circuit/src/ecdsa/curve/curve_adds.rs",
+    "sha256": "300530989a15f7c4573b46f8b8b146623db9f6767a43cb934b7141eab8e7e9d5",
+    "bytes": 4221
+  },
+  {
+    "repo": "elliottech/lighter-prover",
+    "commit": "579f3d15ce54096d2ed0305747312a42d2e68d84",
+    "path": "p3/crates/p3-schnorr/src/affine.rs",
+    "url": "https://raw.githubusercontent.com/elliottech/lighter-prover/579f3d15ce54096d2ed0305747312a42d2e68d84/p3/crates/p3-schnorr/src/affine.rs",
+    "sha256": "a0f68c4aec9be745d2a87b9c065513fffd4004ab6e92ce676def9cf4891d6672",
+    "bytes": 26357
+  },
+  {
+    "repo": "elliottech/lighter-prover",
+    "commit": "579f3d15ce54096d2ed0305747312a42d2e68d84",
+    "path": "p3/crates/p3-schnorr/src/air/eval.rs",
+    "url": "https://raw.githubusercontent.com/elliottech/lighter-prover/579f3d15ce54096d2ed0305747312a42d2e68d84/p3/crates/p3-schnorr/src/air/eval.rs",
+    "sha256": "452bffbc94a7f22dba201a2bbfa9685c33b2c1dc5a4e5baed024f542d8debc49",
+    "bytes": 30177
+  },
+  {
+    "repo": "elliottech/lighter-prover",
+    "commit": "579f3d15ce54096d2ed0305747312a42d2e68d84",
+    "path": "p3/crates/p3-schnorr/src/air/constraints.rs",
+    "url": "https://raw.githubusercontent.com/elliottech/lighter-prover/579f3d15ce54096d2ed0305747312a42d2e68d84/p3/crates/p3-schnorr/src/air/constraints.rs",
+    "sha256": "f5a647b2798d700dea73f549084984859c6b8a810b64038890b8b1214eb386bd",
+    "bytes": 41660
+  },
+  {
+    "repo": "supranational/blst",
+    "commit": "4f72b303888fd02d402a786eeb3d35ac38263ac2",
+    "path": "src/multi_scalar.c",
+    "url": "https://raw.githubusercontent.com/supranational/blst/4f72b303888fd02d402a786eeb3d35ac38263ac2/src/multi_scalar.c",
+    "sha256": "5a7138bfc8bbe5030b5dad35fbcabd5297be3e64e1f8bf40d1d7b29be3a85a7e"
+  },
+  {
+    "repo": "supranational/blst",
+    "commit": "4f72b303888fd02d402a786eeb3d35ac38263ac2",
+    "path": "src/point.h",
+    "url": "https://raw.githubusercontent.com/supranational/blst/4f72b303888fd02d402a786eeb3d35ac38263ac2/src/point.h",
+    "sha256": "09207151264a44d0b232c5f54c56dd20b84037b9d692e952045561c49979963f"
+  },
+  {
+    "repo": "risc0/risc0",
+    "commit": "3bbcd44d6459b9ef6ac0df3846dc9215514934e8",
+    "path": "risc0/circuit/rv32im-sys/cxx/rv32im/circuit/accum_witgen.h",
+    "url": "https://raw.githubusercontent.com/risc0/risc0/3bbcd44d6459b9ef6ac0df3846dc9215514934e8/risc0/circuit/rv32im-sys/cxx/rv32im/circuit/accum_witgen.h",
+    "sha256": "80a0167ad400ce437356b6cdc0f18cd9afbb63ca8bc8525441df4046003c30c4"
+  },
+  {
+    "repo": "succinctlabs/sp1",
+    "commit": "bfc27de3931d90bceb32eb42b922b0165f7f7bf0",
+    "path": "crates/core/machine/src/operations/field/field_inner_product.rs",
+    "url": "https://raw.githubusercontent.com/succinctlabs/sp1/bfc27de3931d90bceb32eb42b922b0165f7f7bf0/crates/core/machine/src/operations/field/field_inner_product.rs",
+    "sha256": "0bcad9ffe383ab3abef244d55e60ff09becb18fadd179bd5e73176abe8816539"
+  },
+  {
+    "repo": "succinctlabs/sp1",
+    "commit": "bfc27de3931d90bceb32eb42b922b0165f7f7bf0",
+    "path": "crates/core/machine/src/operations/field/field_op.rs",
+    "url": "https://raw.githubusercontent.com/succinctlabs/sp1/bfc27de3931d90bceb32eb42b922b0165f7f7bf0/crates/core/machine/src/operations/field/field_op.rs",
+    "sha256": "e90c6ddc67f50ebaf2e46f03105ee9cb694fce7246be41b96696cf1d8b78fd35"
+  },
+  {
+    "repo": "supranational/blst",
+    "commit": "4f72b303888fd02d402a786eeb3d35ac38263ac2",
+    "path": "src/e1.c",
+    "url": "https://raw.githubusercontent.com/supranational/blst/4f72b303888fd02d402a786eeb3d35ac38263ac2/src/e1.c",
+    "sha256": "5a000481439fa2579b7384276c1b1f94f26b7b20dee61c4744db95b79059e6e7"
+  },
+  {
+    "repo": "supranational/blst",
+    "commit": "4f72b303888fd02d402a786eeb3d35ac38263ac2",
+    "path": "src/ec_ops.h",
+    "url": "https://raw.githubusercontent.com/supranational/blst/4f72b303888fd02d402a786eeb3d35ac38263ac2/src/ec_ops.h",
+    "sha256": "b4ace5a1efe5354fc622a11b05eb65f4cc81aa91f6a0baa1912caa34600d4fd0"
+  },
+  {
+    "repo": "supranational/blst",
+    "commit": "4f72b303888fd02d402a786eeb3d35ac38263ac2",
+    "path": "src/recip.c",
+    "url": "https://raw.githubusercontent.com/supranational/blst/4f72b303888fd02d402a786eeb3d35ac38263ac2/src/recip.c",
+    "sha256": "a8c94291971f9749816bc55295ae5b9279c8c365e0edb493eaf8a5d3ca060997"
+  }
+]

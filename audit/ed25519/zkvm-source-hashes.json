@@ -1,0 +1,322 @@
+[
+  {
+    "repo": "zcash/halo2",
+    "sha": "2d54aaf07c8135d0ce54313048999b4002b4cfbf",
+    "path": "halo2_gadgets/src/ecc/chip/mul_fixed.rs",
+    "source_url": "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/mul_fixed.rs",
+    "sha256": "7a2ce8d4f8b4efca580dbbaa76c0f2e583f84296d589d08078db02649d01a85b",
+    "bytes": 18388
+  },
+  {
+    "repo": "zcash/halo2",
+    "sha": "2d54aaf07c8135d0ce54313048999b4002b4cfbf",
+    "path": "halo2_gadgets/src/ecc/chip/mul_fixed/full_width.rs",
+    "source_url": "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/mul_fixed/full_width.rs",
+    "sha256": "8f7b5c58b38a7f68b873c0a06e53dca6f5cba4452a865c3ff009daaa8abb5d0b",
+    "bytes": 11233
+  },
+  {
+    "repo": "zcash/halo2",
+    "sha": "2d54aaf07c8135d0ce54313048999b4002b4cfbf",
+    "path": "halo2_gadgets/src/ecc/chip/mul_fixed/short.rs",
+    "source_url": "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/mul_fixed/short.rs",
+    "sha256": "a656d7e876d829fa4c2629c7ec7b25f9f5106ba68e4935daab21a1ec1e172538",
+    "bytes": 37451
+  },
+  {
+    "repo": "zcash/halo2",
+    "sha": "2d54aaf07c8135d0ce54313048999b4002b4cfbf",
+    "path": "halo2_gadgets/src/ecc/chip/constants.rs",
+    "source_url": "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/constants.rs",
+    "sha256": "4598ca03006b5c001af74425ca19f96e439a20ca7e9a573a1697656b96aa20a9",
+    "bytes": 11090
+  },
+  {
+    "repo": "zcash/halo2",
+    "sha": "2d54aaf07c8135d0ce54313048999b4002b4cfbf",
+    "path": "halo2_gadgets/src/ecc/chip/witness_point.rs",
+    "source_url": "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/witness_point.rs",
+    "sha256": "6a25767a86718b17faa506446666cd25aa6f919f2af336f81ec9c6c746e84136",
+    "bytes": 9346
+  },
+  {
+    "repo": "zcash/halo2",
+    "sha": "2d54aaf07c8135d0ce54313048999b4002b4cfbf",
+    "path": "halo2_gadgets/src/ecc/chip/add.rs",
+    "source_url": "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/add.rs",
+    "sha256": "a81bad0a96c5991a25f4f3d5ea24a41823cd2e1fdbd423d4ec4db16e1f421c75",
+    "bytes": 16086
+  },
+  {
+    "repo": "zcash/halo2",
+    "sha": "2d54aaf07c8135d0ce54313048999b4002b4cfbf",
+    "path": "halo2_gadgets/src/ecc/chip/add_incomplete.rs",
+    "source_url": "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/add_incomplete.rs",
+    "sha256": "1e0083b20f89a8469c42ad18d7d6915012c2132b3a86b1ab772f714b5ae98bad",
+    "bytes": 6540
+  },
+  {
+    "repo": "zcash/halo2",
+    "sha": "2d54aaf07c8135d0ce54313048999b4002b4cfbf",
+    "path": "halo2_gadgets/src/ecc/chip/mul/incomplete.rs",
+    "source_url": "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/mul/incomplete.rs",
+    "sha256": "4bfadb52be382f57421201840cf295938055c482bf66e11536c0df167d0dd0f6",
+    "bytes": 15923
+  },
+  {
+    "repo": "zcash/sapling-crypto",
+    "sha": "88a7946b4a3066787776e11f0a502654167e022d",
+    "path": "src/circuit/ecc.rs",
+    "source_url": "https://github.com/zcash/sapling-crypto/blob/88a7946b4a3066787776e11f0a502654167e022d/src/circuit/ecc.rs",
+    "sha256": "ae671a20ec7a6ab1079fa19fad3ee5d349bd644e215fcdb6dca3e24f98976cb2",
+    "bytes": 38125
+  },
+  {
+    "repo": "zcash/orchard",
+    "sha": "616a669df8c9a59c33d47064d3ce04b25d026b2e",
+    "path": "src/constants/fixed_bases.rs",
+    "source_url": "https://github.com/zcash/orchard/blob/616a669df8c9a59c33d47064d3ce04b25d026b2e/src/constants/fixed_bases.rs",
+    "sha256": "95089325c822c3fb4c8e063554db617c9b050b3f4e48844ad0dd5f5cb8f4b32e",
+    "bytes": 22726
+  },
+  {
+    "repo": "zcash/orchard",
+    "sha": "616a669df8c9a59c33d47064d3ce04b25d026b2e",
+    "path": "src/constants/fixed_bases/value_commit_v.rs",
+    "source_url": "https://github.com/zcash/orchard/blob/616a669df8c9a59c33d47064d3ce04b25d026b2e/src/constants/fixed_bases/value_commit_v.rs",
+    "sha256": "f0cc4fa936497d2235cb53d2f12b8a95012905b7f1b9ab676713c84bcdeafa81",
+    "bytes": 36261
+  },
+  {
+    "repo": "zcash/orchard",
+    "sha": "616a669df8c9a59c33d47064d3ce04b25d026b2e",
+    "path": "Cargo.toml",
+    "source_url": "https://github.com/zcash/orchard/blob/616a669df8c9a59c33d47064d3ce04b25d026b2e/Cargo.toml",
+    "sha256": "7e77f561f41a9f281617490ad26bd4c9776b25e8685d51727031016ea73c08ae",
+    "bytes": 4121
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/crypto/src/dsa/eddsa_25519_sha512/mod.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/crypto/src/dsa/eddsa_25519_sha512/mod.rs",
+    "sha256": "2ea07fcb46fcce37e1f8f50bd269f3536aa8d26f095adbc2576b298299053d86",
+    "bytes": 20862
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/lib/core/asm/crypto/dsa/eddsa_25519_sha512.masm",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/lib/core/asm/crypto/dsa/eddsa_25519_sha512.masm",
+    "sha256": "657cd6a4ca590e23bb5a89bd3ef6e8ecb01708867e2357763ed74cbd8451703c",
+    "bytes": 11740
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/lib/core/asm/precompiles/curves/ed25519.masm",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/lib/core/asm/precompiles/curves/ed25519.masm",
+    "sha256": "10af2a46ce08426724dc9e9e6a5f6a0f9f97cb60a13127cefa656d05e45c6594",
+    "bytes": 15652
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/lib/core/asm/precompiles/hashes/sha512.masm",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/lib/core/asm/precompiles/hashes/sha512.masm",
+    "sha256": "153aa5ae652400f11a8e40eda5751ae031dd24921099743dd7da4dc90a40aade",
+    "bytes": 2289
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/precompiles/src/math/curve/ed25519.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles/src/math/curve/ed25519.rs",
+    "sha256": "ffb23d5eb8bab5dad98131910a348c215ea57ece5ba362077860db634fd499de",
+    "bytes": 5554
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/precompiles-air/src/hash/sha512/compression/mod.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles-air/src/hash/sha512/compression/mod.rs",
+    "sha256": "870ff51109888bf7686ac05d83e49f5ebb230cb611aa6f04ca96a3ffc84dbf60",
+    "bytes": 35380
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/precompiles-air/src/hash/sha512/compression/program.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles-air/src/hash/sha512/compression/program.rs",
+    "sha256": "8f128835f2d231506b5add90688f35b5294f2f3e77c588cc076db81b356ea8f1",
+    "bytes": 19596
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/precompiles-prover/src/hash/sha512/compression/trace.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles-prover/src/hash/sha512/compression/trace.rs",
+    "sha256": "4e748b36541b78acc349d8857d80c656345767936255709c79d2b5e16f284cd3",
+    "bytes": 12006
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/lib/core/src/handlers/precompiles/ed25519.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/lib/core/src/handlers/precompiles/ed25519.rs",
+    "sha256": "8fcecb44603cccedbf02bcdcd4eee134292ea165477d1f2a2e109064e21aeaa0",
+    "bytes": 1394
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/lib/core/src/handlers/precompiles/sha512.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/lib/core/src/handlers/precompiles/sha512.rs",
+    "sha256": "affe19ccb925bbd6f65d3e681b2a6ba46884687e7962a9ca1a3f6f206a97fb15",
+    "bytes": 1827
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/precompiles-air/src/math.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles-air/src/math.rs",
+    "sha256": "edfd075a3eca34cd3cfeaf138329c41bc771b3d5a79fdf27afe6205677b17d0c",
+    "bytes": 5588
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/precompiles-air/src/primitives/byte_pair_lut.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles-air/src/primitives/byte_pair_lut.rs",
+    "sha256": "a2ddb561e662c678c51b5c144a9a7a33dced52fed11a02c1f0dc94464af0dfde",
+    "bytes": 17675
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/precompiles/src/math/curve/short_weierstrass.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles/src/math/curve/short_weierstrass.rs",
+    "sha256": "3580081be2d342e8b46e247d03e53a56ede2035fc2b499132dcc0b003c73efdf",
+    "bytes": 9019
+  },
+  {
+    "repo": "0xMiden/miden-vm",
+    "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+    "path": "crates/precompiles/src/math/ed25519_order.rs",
+    "source_url": "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles/src/math/ed25519_order.rs",
+    "sha256": "9b0c824c1326754f5cb5ca31bf622abcbaa860383e5b2767815e059a4679e8a6",
+    "bytes": 781
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "precompiles/arith_eq/pil/arith_eq.pil",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/pil/arith_eq.pil",
+    "sha256": "b5288edea970fd22cb2c3925803e9a878612ca0c4bcb6c521a8407488980f5f3",
+    "bytes": 44103
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "precompiles/arith_eq/pil/equations/arith256_mod.pil",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/pil/equations/arith256_mod.pil",
+    "sha256": "f66b482f29c516ca70297e9463b22138069f84332f3a01813c666f36ee269fb5",
+    "bytes": 63890
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "precompiles/arith_eq/pil/equations/secp256r1_dbl.pil",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/pil/equations/secp256r1_dbl.pil",
+    "sha256": "34c80ceb68c85924d5af2b1aef69e89579dc3601efdb4b87622f05a0e830a5bc",
+    "bytes": 57602
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "precompiles/arith_eq/pil/equations/secp256r1_add.pil",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/pil/equations/secp256r1_add.pil",
+    "sha256": "ba111f0692a242d3a387f2d3c0b53314153b4a235f804a7a6556c58718d74aee",
+    "bytes": 55323
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "precompiles/arith_eq/src/equations/arith256_mod.rs",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/src/equations/arith256_mod.rs",
+    "sha256": "5e0ba572ddbcfbdc48138e4d7b411bbea2815d4ef40c5472d5c9e6de2be034b2",
+    "bytes": 30299
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "precompiles/arith_eq/src/executors/arith256_mod.rs",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/src/executors/arith256_mod.rs",
+    "sha256": "d964c918415efe8028cb7197c767fd869c0cdc5d7a41722819d08e88a348b9d6",
+    "bytes": 3213
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "precompiles/arith_eq/src/arith_eq_constants.rs",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/src/arith_eq_constants.rs",
+    "sha256": "b2377b5fa74282e5c4aed67f86e67852365c6d3d6f4aa89af4d23748ba864f90",
+    "bytes": 1450
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "precompiles/arith_eq/src/arith_eq_generator.rs",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/src/arith_eq_generator.rs",
+    "sha256": "fd6a4e72e89fbd8aec204c0789fdd335c7592ccfa061d0491c83022ed42b219b",
+    "bytes": 13057
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "precompiles/sha256f/pil/sha256f.pil",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/sha256f/pil/sha256f.pil",
+    "sha256": "6973d42cb74de458e5851258a4cffb79464b592f1a84ecf8075eea9198b966f7",
+    "bytes": 17716
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "lib-c/c/src/arith256/arith256.cpp",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/lib-c/c/src/arith256/arith256.cpp",
+    "sha256": "598f0ce3a91eda7d88be3dd6a28f59b3c178d47ef19605ae6e154de27f00d2ec",
+    "bytes": 9086
+  },
+  {
+    "repo": "0xPolygonHermez/zisk",
+    "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+    "path": "Cargo.toml",
+    "source_url": "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/Cargo.toml",
+    "sha256": "df1dd6311c782e05115013a746ff22a6b3220a33537dc134124371190f7f8316",
+    "bytes": 12673
+  },
+  {
+    "repo": "0xPolygonHermez/pil2-proofman",
+    "sha": "eda04742b64abe0e5322a8231f0155438ffb62fe",
+    "path": "pil2-components/lib/std/pil/std_lookup.pil",
+    "source_url": "https://github.com/0xPolygonHermez/pil2-proofman/blob/eda04742b64abe0e5322a8231f0155438ffb62fe/pil2-components/lib/std/pil/std_lookup.pil",
+    "sha256": "f92644a656dff68da42d297dfcbc9c858dff8205a30c9c171407347d490d9025",
+    "bytes": 7081
+  },
+  {
+    "repo": "0xPolygonHermez/pil2-proofman",
+    "sha": "eda04742b64abe0e5322a8231f0155438ffb62fe",
+    "path": "pil2-components/lib/std/pil/std_range_check.pil",
+    "source_url": "https://github.com/0xPolygonHermez/pil2-proofman/blob/eda04742b64abe0e5322a8231f0155438ffb62fe/pil2-components/lib/std/pil/std_range_check.pil",
+    "sha256": "75951e8d8d80a7a4d3231764982c438c4e227d868f1a4996336267a8ad9a25d8",
+    "bytes": 38401
+  },
+  {
+    "repo": "0xPolygonHermez/pil2-proofman",
+    "sha": "eda04742b64abe0e5322a8231f0155438ffb62fe",
+    "path": "examples/hashes/pil/sha2.pil",
+    "source_url": "https://github.com/0xPolygonHermez/pil2-proofman/blob/eda04742b64abe0e5322a8231f0155438ffb62fe/examples/hashes/pil/sha2.pil",
+    "sha256": "569b16ed363232f495ca552d0a133ac68503c6558709b37e6287810f6b013e37",
+    "bytes": 16099
+  }
+]

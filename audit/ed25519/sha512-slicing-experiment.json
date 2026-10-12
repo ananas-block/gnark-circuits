@@ -1,0 +1,75 @@
+{
+  "name": "Noir-inspired rotation-aligned SHA512 slices, adapted for R1CS",
+  "source_url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/encoding.nr",
+  "baseline": {
+    "core": 30072,
+    "ed25519_full_32B_x1": 52937,
+    "ed25519_full_32B_x10": 468401,
+    "sha512_64B_x1": 22778,
+    "sha512_64B_x10": 198865,
+    "sha512_128B_x1": 37863,
+    "sha512_128B_x10": 349698
+  },
+  "candidate": {
+    "core": 30072,
+    "ed25519_full_32B_x1": 50964,
+    "ed25519_full_32B_x10": 464039,
+    "sha512_64B_x1": 20724,
+    "sha512_64B_x10": 193701,
+    "sha512_128B_x1": 35588,
+    "sha512_128B_x10": 342283
+  },
+  "experiments": [
+    {
+      "variant": "rotation-aligned original Noir widths with independent input byte range checks",
+      "full_32B": 51184,
+      "sha512_64B": 23185,
+      "disposition": "Input byte range table causes standalone regression."
+    },
+    {
+      "variant": "input bytes bound by existing 8-bit spread table",
+      "full_32B": 51233,
+      "sha512_64B": 21002,
+      "disposition": "Improves both full verifier and standalone hash."
+    },
+    {
+      "variant": "replace 9-bit slices with 8+1",
+      "full_32B": 51021,
+      "sha512_64B": 20781,
+      "disposition": "Removes 512-row table; extra Boolean constraints cost less."
+    },
+    {
+      "variant": "also replace lone 7-bit slice with 6+1",
+      "full_32B": 50964,
+      "sha512_64B": 20724,
+      "disposition": "Final selected variant."
+    }
+  ],
+  "validation": {
+    "full_module": "go test ./... -count=1 passed for every package; full-tests.log",
+    "vet": "go vet ./... passed",
+    "hash_cases": "0,3,32,64,96,111,112,128,257 bytes checked against crypto/sha512; wrong digest and byte256 rejected; constant IV/round constants independently derived from prime roots",
+    "forged_hints": "Old parity-chunk override and new typed-slice override rejected",
+    "typed_slice_attacks": "Width1 and width8 overflow preserve integer recomposition; top-slice overflow preserves modular carry equation. All rejected.",
+    "ed25519": "All 914 dalek CCTV vectors, scalar boundaries, mixed torsion/challenge and zero-S tests, host differential tests, and adversarial circuits passed in full module run.",
+    "counts": "go test ./cmd/benchmark -run ^TestTemporaryNoirSliceCounts$ -count=1 -v passed; counts.log"
+  },
+  "soundness": [
+    "Each original input byte is bound by a 256-row spread lookup before word packing.",
+    "Every slice has exact width membership in its own table; one-bit slices satisfy Boolean constraints.",
+    "Families sum to 64 bits and contain all their rotation/shift cuts. Dense/spread recompositions are below 2^64/2^128, parity recomposition below 2^130.",
+    "Each modular sum uses a 64-bit output and carry in [0,16), with all terms below 2^68. Native field is at least 200 bits.",
+    "State words keep A/E rotation families between blocks; only the final digest uses byte slices. Endianness, padding and hash transcript are unchanged."
+  ],
+  "files": {
+    "hasher/sha512.go": "9c00410e3ab193752a7608245db8773b0c1c50da27bd791234eba721f44a6647",
+    "hasher/sha512_test.go": "adf85dd6f03e606184f9e0081120e6f8a583699ed10966809e8cae0111521c4c",
+    "sha512-slicing.patch": "98a917a41adf65c6f72c28e5023bfeaf76756f0f7b36369b2569e721bd79dec0",
+    "sha512-slicing-tests.patch": "b162ab14060ab83fb34a1fdb89f4c8d2cc4599cac820fa53038e48da9efba6ef",
+    "sha512.go.before": "5a055bb1ae6d21c922fad4e92d392e341bf072c76c76efeaf56cfe4104097380",
+    "sha512_test.go.before": "0f6677c1675bc7820261cb26aca9e5ba39efe6d7adddd5ba562581b24a001085"
+  },
+  "workspace_edits": "none",
+  "cpu_work": "stopped; final real proof benchmarks delegated to parent after main integration",
+  "promotion": "Applied production/test patches after static review; production source matches isolated candidate byte for byte. Main verification/proof results recorded in verification-results.json."
+}

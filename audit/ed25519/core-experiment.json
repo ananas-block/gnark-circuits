@@ -1,0 +1,33 @@
+{
+  "id": "ed25519-core-packing-and-crt-squares-2026-10-11",
+  "snapshot": "/tmp/mola-packexp.krKfwZ",
+  "constraints": {
+    "baseline_core": 31969,
+    "short_table_x_pairs": 31711,
+    "remove_us_canonical": 31684,
+    "packed_constants_and_two_dimensional_offset_selection": 31621,
+    "quadratic_crt_square_shortcut": 30868,
+    "square_difference_xout": 30740,
+    "final_full32B": 53605,
+    "p256_lookup_unchanged": 30367,
+    "p256_no_lookup_unchanged": 140320
+  },
+  "files": [
+    "ed25519/short.go",
+    "ed25519/montgomery.go",
+    "p256/emfield/plain.go",
+    "p256/emfield/crt.go",
+    "p256/emfield/crt_square_test.go"
+  ],
+  "production_patch": "/tmp/mola-packexp.krKfwZ/core-packing-square.patch",
+  "new_test_patch": "/tmp/mola-packexp.krKfwZ/crt-square-differential-test.patch",
+  "tests": [
+    "go test ./p256/emfield -run ^TestCRTSquareFrontendDifferential$ -count=1 -v",
+    "go test ./ed25519 ./p256 ./p256/emfield -count=1",
+    "go test ./p256 -run ^TestECDSAConstraintCount$ -count=1 -v"
+  ],
+  "validation": "All passed. CRT differential uses zero/one/native-minus-one, basis vectors and20 deterministic random vectors for each of3 polynomial shapes; wrong expected coefficient is rejected. Binomial shortcut12 frontendrows vsgeneric15. Nonbinomial quadratics and linear+cubic fallbacks exercised.",
+  "notes": "No workspace writes. Main test edits are not included in production patch. Future main benchmark must reflect shared arithmetic changes.",
+  "review": "Square shortcut enabled only when every irreducible factor is degree2 with zero linear coefficient. Projection relations and recombination coefficients are validated over the native field; all original integer coefficient/carry bounds remain unchanged. No correctness issue found in production-only diff review.",
+  "promotion": "Applied production changes and native frontend differential tests; renamed shared coordinate packing helpers and documented reduced scalar semantics."
+}

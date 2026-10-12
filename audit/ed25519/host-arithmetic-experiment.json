@@ -1,0 +1,77 @@
+{
+  "baseline_constraints": {
+    "core": 30324,
+    "full_32B": 53189,
+    "full_x10": 470921
+  },
+  "scope": "host-only witness arithmetic; no circuit equations changed",
+  "sources": [
+    "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles/src/math/curve/short_weierstrass.rs",
+    "https://www.hyperelliptic.org/EFD/g1p/auto-twisted-extended-1.html"
+  ],
+  "baseline_prove_ms_median5": {
+    "x1": 218.7,
+    "x10": 1224.0
+  },
+  "allocation_heavy_extended_prove_ms_median5": {
+    "x1": 258.4,
+    "x10": 1028.1
+  },
+  "final_extended_microbench_ns": [
+    432720,
+    431969,
+    432554
+  ],
+  "original_affine_microbench_ns": [
+    1314031,
+    1377428,
+    1288921
+  ],
+  "affine_batched_microbench_ns": [
+    915416,
+    913823,
+    954080
+  ],
+  "allocations_original": 22149,
+  "allocations_final": 5958,
+  "differential_cases": {
+    "canonical_scalar": 384,
+    "lifted_scalar": 96,
+    "pairwise_add": 576,
+    "malformed_add": 4,
+    "malformed_mul": 16
+  },
+  "patches": {
+    "host-arithmetic.patch": "96b73957a5e2acb2cc8161043088cce7c4a1899b7e313da3b155bbdec93448b3",
+    "host-arithmetic-tests.patch": "2f7b20bebf23d0e902f6510c1d2d62a83137b75d9f46941890b2dc1b34dfffb7"
+  },
+  "validation": {
+    "independent_host_differential": "pass, including lifted valid coordinates and denominator-zero malformed inputs",
+    "full_ed25519_suite_final": "pass, 92.967 s; includes 914 CCTV vectors and mixed-torsion/scalar/adversarial tests",
+    "code_review": "Only host arithmetic changed. Input points/scalars and shared constants are read-only; big.Int temporaries are per call; scalar is not reduced mod L; zero final projective denominator safely returns zero coordinates."
+  },
+  "source_hashes": {
+    "curve.go": {
+      "baseline_sha256": "04bda3e6c529cdd5a317ac252acccda76fbf08ef1ce681cbfecd4abfcc7dd525",
+      "final_sha256": "1a6b63c1d8debac7efcdb3bd9f47ed5412486030f158341e18dea2bc2648ff9c"
+    },
+    "short.go": {
+      "baseline_sha256": "a524b86f188312543e5890c92044fb57eea1d741a3ae8d61d8d49144e95b5a49",
+      "final_sha256": "a50e52e668843d23354b7e01fec2afa0575ec48174ae9ac5541ed6278e4e97f3"
+    }
+  },
+  "baseline_repeat_prove_ms_median5": {
+    "x1": 222.0,
+    "x10": 1380.9
+  },
+  "final_prove_ms_median5": {
+    "x1": 234.3,
+    "x10": 1127.0
+  },
+  "final_measured_constraints": {
+    "full_32B": 53189,
+    "full_x10": 470921
+  },
+  "conclusion": "Extended host multiplication is 67.1% faster in isolated differential microbenchmarks, with 73.1% fewer allocations. Real Groth16 x10 medians improved in both pairs, but single-proof medians regressed and total timing was variable. No single-proof end-to-end speedup is established. All circuit constraints and semantic regressions remain unchanged.",
+  "cpu_work": "stopped"
+}

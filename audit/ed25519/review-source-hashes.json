@@ -1,0 +1,49 @@
+{
+  "circomlib": {
+    "directory": "/Users/jorrit/dev/experiments/circomlib",
+    "files": {
+      "circuits/eddsa.circom": "a9d64b6459a1275b14ba79ca9e13c2fe4fca681739e39dc6d1234997efb37f77",
+      "circuits/babyjub.circom": "fdd45cd3edd59621c203d478218c1a623a03acdd4d5be997208310bc72df61ce",
+      "circuits/montgomery.circom": "63692077f57f4467960b172830abbeb4dfafdc3744cde6863433cccea7f0f2bf",
+      "circuits/escalarmulany.circom": "a881382804dc0e0fde2784c6b6e507928b5e0f14bef927c50f4529c05d2fa9de",
+      "circuits/escalarmulfix.circom": "32c3f23c33d6325156ba42ebcd83cd75f944ccb5fb4db042ddb9bec987b2c7e6",
+      "circuits/escalarmulw4table.circom": "c22dcc91ea7f363029ac9ee06c804868e0ccbcf0c58d6e0840b102a229fd1181",
+      "circuits/mux2.circom": "3eb37808cb9a1eee5cc3659dae3c5544abec28aa1cf42852732fdbbca8272968",
+      "circuits/mux3.circom": "5fe2d242bf2482df1d75401d18399c4eac3e1d34d89622290c98f4aefa21dba4",
+      "circuits/sha256/sha256compression.circom": "aec6674cee5d0b775d7b27279a98b7fbabf5258885d56e01dec9a4a356dbc69c"
+    },
+    "commit": "35e54ea21da3e8762557234298dbb553c175ea8d"
+  },
+  "solana-ecvrf": {
+    "directory": "/tmp/mola-solana-ecvrf",
+    "files": {
+      "README.md": "0a510f419be294447c032ee0b5e18ea1b94625609a7842e6cf3903bbadbd63ad",
+      "Cargo.toml": "975d20972f156683eb1f17e33b89535b4d1156728af6c4bb4bcd7c57afb24421",
+      "src/lib.rs": "52a0b1a138b4d07ad24b7114f4e92f8f4d0c3a22afe724c5ee82cee994071309",
+      "src/curve.rs": "9b748231173ae68c818f4dd4a2fe1f5fae73ef0e9c970dca12be8aba888495a1",
+      "src/scalar.rs": "0269e8f0ce5bcc29180d31a92d1497696d1f2182e6dbe9753428daee8ca757ea",
+      "src/sha512.rs": "3664f97e713fe8e87122f78ae38b9b3ff50098923df28fe19b2733c91ce816d7",
+      "src/syscalls.rs": "779dd5b42d0f41c0347480282d77cf80ecbd78a19b1ea8974d55239fcb0228ad",
+      "src/tests.rs": "e310a56f872625925f94a4a548b24a177a84f1e30e874ad53055fac118702f5e"
+    },
+    "commit": "ff22e7914f8a26f061638bfd4bfaf26742e9f1a3"
+  },
+  "Picus local Ed25519": {
+    "directory": "/Users/jorrit/dev/experiments/Picus/benchmarks/libs/ed25519-099d19c-fixed",
+    "files": {
+      "verify.circom": "55939d0368c95ae10915ee05070b33a190c3565f547c59f8d0cee31a742e7bb0",
+      "scalarmul.circom": "3ad3dbb6982ea62d57d1bdf6fa8f3cb6bc3a7fffab5b0f57296a25dcc085f850",
+      "point-addition.circom": "e77679d7ec85a06a72babb7878d82f724d93dc344b2ec3d3f100b600cc81fc59"
+    }
+  },
+  "Picus local SHA512": {
+    "directory": "/Users/jorrit/dev/experiments/Picus/benchmarks/libs/sha512-0562652",
+    "files": {
+      "sha512compression.circom": "215a6660d8274d161289e532b11454fd8d9d125627100b663357645379062b97",
+      "maj.circom": "38ca013bc7dde431ba32ac50c4d5b4c894f010c65ea4cf5fddd8bcb2debc360e",
+      "ch.circom": "e5a637cc90aa338fcb8108303443d5f32a7f11d3b5b92d6279f9329b570439c1",
+      "sigmaplus.circom": "188a54bd55228db8e129d46b0a2c3af2791d91addb96135a69c7cb03d8044b3f",
+      "t1.circom": "ef6fae3f6c0c72489ad6ee9177f274426f569f9bf5fcc68dbd8bf58ef8db6fd6"
+    }
+  }
+}

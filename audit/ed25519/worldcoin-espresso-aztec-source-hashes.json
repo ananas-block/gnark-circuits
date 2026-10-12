@@ -1,0 +1,370 @@
+[
+  {
+    "repo": "worldcoin/world-id-protocol",
+    "sha": "52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd",
+    "path": "circom/babyjubjub/babyjubjub.circom",
+    "source_url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/babyjubjub/babyjubjub.circom",
+    "sha256": "7d16cd770014df5ecc268162ffafb60d9c5032c7d2d31ffdaaf1213eb53e7c12",
+    "bytes": 12816
+  },
+  {
+    "repo": "worldcoin/world-id-protocol",
+    "sha": "52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd",
+    "path": "circom/eddsa_poseidon2/eddsaposeidon2.circom",
+    "source_url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/eddsa_poseidon2/eddsaposeidon2.circom",
+    "sha256": "8139cacbd86f346368bd8e35b468b3bfbd5e82dfead404f315c7884200029383",
+    "bytes": 3552
+  },
+  {
+    "repo": "worldcoin/world-id-protocol",
+    "sha": "52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd",
+    "path": "circom/verify_dlog/verify_dlog.circom",
+    "source_url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/verify_dlog/verify_dlog.circom",
+    "sha256": "14efb78dfc97caac677a3aa782c42d5554b9a948c0379d8ef3601f0f31241614",
+    "bytes": 4397
+  },
+  {
+    "repo": "worldcoin/world-id-protocol",
+    "sha": "52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd",
+    "path": "circom/inverse_or_zero/inverse_or_zero.circom",
+    "source_url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/inverse_or_zero/inverse_or_zero.circom",
+    "sha256": "0061d11aea02ec61559cd4f9ac00cc8f5523fadb460c5af1d0042a3bd8e0274a",
+    "bytes": 925
+  },
+  {
+    "repo": "worldcoin/world-id-protocol",
+    "sha": "52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd",
+    "path": "circom/circomlib/babyjub.circom",
+    "source_url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/circomlib/babyjub.circom",
+    "sha256": "fdd45cd3edd59621c203d478218c1a623a03acdd4d5be997208310bc72df61ce",
+    "bytes": 2454
+  },
+  {
+    "repo": "worldcoin/world-id-protocol",
+    "sha": "52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd",
+    "path": "circom/circomlib/escalarmulfix.circom",
+    "source_url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/circomlib/escalarmulfix.circom",
+    "sha256": "be0f8e587472089fda39a666ff115f5c5205274bec5b7ed4009ce7d0d05737fb",
+    "bytes": 8603
+  },
+  {
+    "repo": "worldcoin/world-id-protocol",
+    "sha": "52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd",
+    "path": "circom/circomlib/escalarmulany.circom",
+    "source_url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/circomlib/escalarmulany.circom",
+    "sha256": "a881382804dc0e0fde2784c6b6e507928b5e0f14bef927c50f4529c05d2fa9de",
+    "bytes": 5790
+  },
+  {
+    "repo": "worldcoin/semaphore-mtb",
+    "sha": "3f56f6a425be50e3d4ab441f96a2e55acc52a068",
+    "path": "prover/circuit_utils.go",
+    "source_url": "https://github.com/worldcoin/semaphore-mtb/blob/3f56f6a425be50e3d4ab441f96a2e55acc52a068/prover/circuit_utils.go",
+    "sha256": "b4c5ac860840d4ad989d7e21e92d93b7ea5c62c00b7e2aba8ec87756d1955a7f",
+    "bytes": 9567
+  },
+  {
+    "repo": "worldcoin/semaphore-mtb",
+    "sha": "3f56f6a425be50e3d4ab441f96a2e55acc52a068",
+    "path": "prover/insertion_circuit.go",
+    "source_url": "https://github.com/worldcoin/semaphore-mtb/blob/3f56f6a425be50e3d4ab441f96a2e55acc52a068/prover/insertion_circuit.go",
+    "sha256": "0981ed2b0914bc14e04bdd1d1fd7d2816a278484335f2b429a75304865ac947f",
+    "bytes": 3378
+  },
+  {
+    "repo": "worldcoin/semaphore-mtb",
+    "sha": "3f56f6a425be50e3d4ab441f96a2e55acc52a068",
+    "path": "go.mod",
+    "source_url": "https://github.com/worldcoin/semaphore-mtb/blob/3f56f6a425be50e3d4ab441f96a2e55acc52a068/go.mod",
+    "sha256": "13d1d49b63b88336eeee64205fe7b1ee48094b8280ae64fc1e4601b52b90399d",
+    "bytes": 4747
+  },
+  {
+    "repo": "worldcoin/Remainder_CE",
+    "sha": "5687fe7f3a077c75c374422ef79f22e3860de9c1",
+    "path": "frontend/src/components/sha2_gkr.rs",
+    "source_url": "https://github.com/worldcoin/Remainder_CE/blob/5687fe7f3a077c75c374422ef79f22e3860de9c1/frontend/src/components/sha2_gkr.rs",
+    "sha256": "9467ea4bc5e59fe1e68334cdcd64fa7a04613fe5dcf8f5966c2f2c1d0e108920",
+    "bytes": 1446
+  },
+  {
+    "repo": "worldcoin/Remainder_CE",
+    "sha": "5687fe7f3a077c75c374422ef79f22e3860de9c1",
+    "path": "frontend/src/components/sha2_gkr/sha256_bit_decomp.rs",
+    "source_url": "https://github.com/worldcoin/Remainder_CE/blob/5687fe7f3a077c75c374422ef79f22e3860de9c1/frontend/src/components/sha2_gkr/sha256_bit_decomp.rs",
+    "sha256": "c883bc57fa49ad445182e0ece2206e52d76a7ce8d0b1d0e0a6c9295077887be9",
+    "bytes": 29877
+  },
+  {
+    "repo": "worldcoin/Remainder_CE",
+    "sha": "5687fe7f3a077c75c374422ef79f22e3860de9c1",
+    "path": "frontend/src/components/sha2_gkr/nonlinear_gates.rs",
+    "source_url": "https://github.com/worldcoin/Remainder_CE/blob/5687fe7f3a077c75c374422ef79f22e3860de9c1/frontend/src/components/sha2_gkr/nonlinear_gates.rs",
+    "sha256": "7d004a715f40dad4888ec46ebfbb5a9ab84d7c0f44991fb463ce8e0c31e9363e",
+    "bytes": 13999
+  },
+  {
+    "repo": "worldcoin/Remainder_CE",
+    "sha": "5687fe7f3a077c75c374422ef79f22e3860de9c1",
+    "path": "frontend/src/components/sha2_gkr/brent_kung_adder.rs",
+    "source_url": "https://github.com/worldcoin/Remainder_CE/blob/5687fe7f3a077c75c374422ef79f22e3860de9c1/frontend/src/components/sha2_gkr/brent_kung_adder.rs",
+    "sha256": "f19516715118ecf7465eac64606f5b705a50441761d64a3c61e70c74bae46468",
+    "bytes": 5819
+  },
+  {
+    "repo": "worldcoin/Remainder_CE",
+    "sha": "5687fe7f3a077c75c374422ef79f22e3860de9c1",
+    "path": "frontend/src/layouter/nodes/lookup.rs",
+    "source_url": "https://github.com/worldcoin/Remainder_CE/blob/5687fe7f3a077c75c374422ef79f22e3860de9c1/frontend/src/layouter/nodes/lookup.rs",
+    "sha256": "4f77fc2241e14e5ae7dd67e9c332593c33a3e52623c2de676006c5ccde59ec18",
+    "bytes": 18711
+  },
+  {
+    "repo": "worldcoin/world-chain",
+    "sha": "07338168de51fdafa31b4d4e3be7921ca06714f1",
+    "path": "Cargo.toml",
+    "source_url": "https://github.com/worldcoin/world-chain/blob/07338168de51fdafa31b4d4e3be7921ca06714f1/Cargo.toml",
+    "sha256": "2a585c5f53f37dff94d212a033cfaf7733731f6c8a7309fc0ad0128262d65040",
+    "bytes": 23123
+  },
+  {
+    "repo": "worldcoin/world-chain",
+    "sha": "07338168de51fdafa31b4d4e3be7921ca06714f1",
+    "path": "crates/evm/src/factory.rs",
+    "source_url": "https://github.com/worldcoin/world-chain/blob/07338168de51fdafa31b4d4e3be7921ca06714f1/crates/evm/src/factory.rs",
+    "sha256": "a51119feb7b91e6e514a50db07c7ffd4b5ba33fe647ff939f9c0c9b4cb5e861a",
+    "bytes": 2390
+  },
+  {
+    "repo": "worldcoin/world-chain",
+    "sha": "07338168de51fdafa31b4d4e3be7921ca06714f1",
+    "path": "proofs/backends/sp1/guest-builder/Cargo.toml",
+    "source_url": "https://github.com/worldcoin/world-chain/blob/07338168de51fdafa31b4d4e3be7921ca06714f1/proofs/backends/sp1/guest-builder/Cargo.toml",
+    "sha256": "e897e5a7b0f4a48e98e6d276c5a6c82ea6647d2769e89114e731a409603973b1",
+    "bytes": 428
+  },
+  {
+    "repo": "worldcoin/bedrock",
+    "sha": "80d56797ef5e7b195169c1a81ce4ddf2116411e1",
+    "path": "bedrock/src/primitives/signer.rs",
+    "source_url": "https://github.com/worldcoin/bedrock/blob/80d56797ef5e7b195169c1a81ce4ddf2116411e1/bedrock/src/primitives/signer.rs",
+    "sha256": "a2562d652d50638a50423fc22224f538da2f8e9056bd1e659d3729e92b8a4628",
+    "bytes": 11264
+  },
+  {
+    "repo": "worldcoin/bedrock",
+    "sha": "80d56797ef5e7b195169c1a81ce4ddf2116411e1",
+    "path": "bedrock/src/root_key/mod.rs",
+    "source_url": "https://github.com/worldcoin/bedrock/blob/80d56797ef5e7b195169c1a81ce4ddf2116411e1/bedrock/src/root_key/mod.rs",
+    "sha256": "de22251d045ed315c5cc0a41f6f647f56ae642b8590c62b70bce86d046b1be11",
+    "bytes": 8648
+  },
+  {
+    "repo": "worldcoin/crypto-native-lib",
+    "sha": "8b03351eabae0c3c0d5b9fdf9e3c0e8700a819eb",
+    "path": "src/lib.rs",
+    "source_url": "https://github.com/worldcoin/crypto-native-lib/blob/8b03351eabae0c3c0d5b9fdf9e3c0e8700a819eb/src/lib.rs",
+    "sha256": "b0ec33ca9945199796964ac7c4e9d8a5449a21a1c918ea3476a311ee3d3fa7b0",
+    "bytes": 8496
+  },
+  {
+    "repo": "worldcoin/crypto-native-lib",
+    "sha": "8b03351eabae0c3c0d5b9fdf9e3c0e8700a819eb",
+    "path": "Cargo.toml",
+    "source_url": "https://github.com/worldcoin/crypto-native-lib/blob/8b03351eabae0c3c0d5b9fdf9e3c0e8700a819eb/Cargo.toml",
+    "sha256": "ff3604a81538bb3e4334e7c4701cc90edb76a3b1b8dd9d7b99dfc741dbbd1018",
+    "bytes": 793
+  },
+  {
+    "repo": "worldcoin/private-inclusion-proofs",
+    "sha": "1750485b2fe4ee68c5f0ba5445b3982133b8851f",
+    "path": "src/main.rs",
+    "source_url": "https://github.com/worldcoin/private-inclusion-proofs/blob/1750485b2fe4ee68c5f0ba5445b3982133b8851f/src/main.rs",
+    "sha256": "c8e0583694bb1e0188dbe28fe0d65ac1130723c55f968b6262b906c147f72549",
+    "bytes": 45
+  },
+  {
+    "repo": "worldcoin/semaphore-rs",
+    "sha": "9f90a92cca274b583b50c40df36e5ca8845def75",
+    "path": "crates/semaphore/src/circuit.rs",
+    "source_url": "https://github.com/worldcoin/semaphore-rs/blob/9f90a92cca274b583b50c40df36e5ca8845def75/crates/semaphore/src/circuit.rs",
+    "sha256": "0e9fd15eaf2871ab409006c89c44e2072c7f6f102b011d225a99304159f421c3",
+    "bytes": 1279
+  },
+  {
+    "repo": "Electron-Labs/ed25519-circom",
+    "sha": "99490fc0b4ad14206a6f772baa73b0c64cf38146",
+    "path": "circuits/verify.circom",
+    "source_url": "https://github.com/Electron-Labs/ed25519-circom/blob/99490fc0b4ad14206a6f772baa73b0c64cf38146/circuits/verify.circom",
+    "sha256": "dfd7dbc833d53dfaee9c724b24a71cfa6df2ddc6432eb834e43a5d12774c4608",
+    "bytes": 4304
+  },
+  {
+    "repo": "Electron-Labs/ed25519-circom",
+    "sha": "99490fc0b4ad14206a6f772baa73b0c64cf38146",
+    "path": "circuits/point-addition.circom",
+    "source_url": "https://github.com/Electron-Labs/ed25519-circom/blob/99490fc0b4ad14206a6f772baa73b0c64cf38146/circuits/point-addition.circom",
+    "sha256": "a9e7a8b5aae1622c2f5f09615865fa514a010ec9cd0cc19757ebe17388a688e0",
+    "bytes": 11474
+  },
+  {
+    "repo": "Electron-Labs/ed25519-circom",
+    "sha": "99490fc0b4ad14206a6f772baa73b0c64cf38146",
+    "path": "circuits/scalarmul.circom",
+    "source_url": "https://github.com/Electron-Labs/ed25519-circom/blob/99490fc0b4ad14206a6f772baa73b0c64cf38146/circuits/scalarmul.circom",
+    "sha256": "3ad3dbb6982ea62d57d1bdf6fa8f3cb6bc3a7fffab5b0f57296a25dcc085f850",
+    "bytes": 4974
+  },
+  {
+    "repo": "Electron-Labs/ed25519-circom",
+    "sha": "99490fc0b4ad14206a6f772baa73b0c64cf38146",
+    "path": "circuits/chunkedmul.circom",
+    "source_url": "https://github.com/Electron-Labs/ed25519-circom/blob/99490fc0b4ad14206a6f772baa73b0c64cf38146/circuits/chunkedmul.circom",
+    "sha256": "f3eec482b332a43cd5cf61a29368733043c6bf667d359a6dd7a254e54e95bf81",
+    "bytes": 3657
+  },
+  {
+    "repo": "EspressoSystems/jellyfish",
+    "sha": "b1581c26f7195962d17fc5ff3768ac55db610ca1",
+    "path": "relation/src/gadgets/emulated.rs",
+    "source_url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/relation/src/gadgets/emulated.rs",
+    "sha256": "618b2481de61095bb198a2f8114f5b35736a60399d4f4f2d1f776775a7178391",
+    "bytes": 33872
+  },
+  {
+    "repo": "EspressoSystems/jellyfish",
+    "sha": "b1581c26f7195962d17fc5ff3768ac55db610ca1",
+    "path": "relation/src/gadgets/ecc/emulated/twisted_edwards.rs",
+    "source_url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/relation/src/gadgets/ecc/emulated/twisted_edwards.rs",
+    "sha256": "959b75a122a1263eb791708d70db9a5c2e8e3224954fa80079be0bb5eb4c0b1e",
+    "bytes": 11416
+  },
+  {
+    "repo": "EspressoSystems/jellyfish",
+    "sha": "b1581c26f7195962d17fc5ff3768ac55db610ca1",
+    "path": "relation/src/gadgets/ecc/msm.rs",
+    "source_url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/relation/src/gadgets/ecc/msm.rs",
+    "sha256": "3e9bdeb21ccf56d9478d67da4b2553e9b55cac612457d4c32030a5fa3e5a612d",
+    "bytes": 15920
+  },
+  {
+    "repo": "EspressoSystems/jellyfish",
+    "sha": "b1581c26f7195962d17fc5ff3768ac55db610ca1",
+    "path": "relation/src/gadgets/ultraplonk/mod_arith.rs",
+    "source_url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/relation/src/gadgets/ultraplonk/mod_arith.rs",
+    "sha256": "5c42c7e81fd65787227acf3d840cdd179b1b44f9d3f9a015dbe32b1db0cf5b5b",
+    "bytes": 65116
+  },
+  {
+    "repo": "EspressoSystems/jellyfish",
+    "sha": "b1581c26f7195962d17fc5ff3768ac55db610ca1",
+    "path": "relation/src/gadgets/ultraplonk/non_native_gates.rs",
+    "source_url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/relation/src/gadgets/ultraplonk/non_native_gates.rs",
+    "sha256": "11aa4faab63d38472209faf34c2100088e6ba41982f8a5e8ede0cd056e5a1079",
+    "bytes": 16229
+  },
+  {
+    "repo": "EspressoSystems/jellyfish",
+    "sha": "b1581c26f7195962d17fc5ff3768ac55db610ca1",
+    "path": "signature/src/gadgets/schnorr.rs",
+    "source_url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/signature/src/gadgets/schnorr.rs",
+    "sha256": "e372a309931fcf605340b5d4ff51bdb523f11821536fce78f6768de2391b605f",
+    "bytes": 11180
+  },
+  {
+    "repo": "AztecProtocol/aztec-packages",
+    "sha": "bb15fcbbe969f11a892272715fe59f0976b086ca",
+    "path": "barretenberg/cpp/src/barretenberg/stdlib/encryption/ecdsa/ecdsa_impl.hpp",
+    "source_url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/encryption/ecdsa/ecdsa_impl.hpp",
+    "sha256": "ac14395dbe197cf7c01f35083f9dc171889707549b175ca4d2eb6dd0ed1701f9",
+    "bytes": 11999
+  },
+  {
+    "repo": "AztecProtocol/aztec-packages",
+    "sha": "bb15fcbbe969f11a892272715fe59f0976b086ca",
+    "path": "barretenberg/cpp/src/barretenberg/stdlib/hash/sha256/sha256.cpp",
+    "source_url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/hash/sha256/sha256.cpp",
+    "sha256": "d12d249fe1a8b833ffad35666beeea26c000f615af51a466b6d295a3fa2138ff",
+    "bytes": 19393
+  },
+  {
+    "repo": "AztecProtocol/aztec-packages",
+    "sha": "bb15fcbbe969f11a892272715fe59f0976b086ca",
+    "path": "barretenberg/cpp/src/barretenberg/stdlib/primitives/bigfield/bigfield_impl.hpp",
+    "source_url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/primitives/bigfield/bigfield_impl.hpp",
+    "sha256": "f92dff4a4e75096c13d00899a3e1a83a59c205a511e9e8d26956ef9ee3eb4580",
+    "bytes": 143228
+  },
+  {
+    "repo": "AztecProtocol/aztec-packages",
+    "sha": "bb15fcbbe969f11a892272715fe59f0976b086ca",
+    "path": "barretenberg/cpp/src/barretenberg/stdlib/primitives/biggroup/biggroup_secp256r1.hpp",
+    "source_url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/primitives/biggroup/biggroup_secp256r1.hpp",
+    "sha256": "8635457a0c0fe6dbed78095a8e31a2b02b3b0d3b01cadb5322df20587f1a15aa",
+    "bytes": 15244
+  },
+  {
+    "repo": "AztecProtocol/aztec-packages",
+    "sha": "bb15fcbbe969f11a892272715fe59f0976b086ca",
+    "path": "barretenberg/cpp/src/barretenberg/stdlib/primitives/biggroup/biggroup_tables.hpp",
+    "source_url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/primitives/biggroup/biggroup_tables.hpp",
+    "sha256": "ecb589bb6285306630f20e85a16140e3850a1ea011741114529401223b56bc29",
+    "bytes": 16969
+  },
+  {
+    "repo": "noir-lang/sha512",
+    "sha": "e92ffb473f3264529a0793770f63a09946df50cc",
+    "path": "src/lib.nr",
+    "source_url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/lib.nr",
+    "sha256": "fe5013f9f65e79bf74096e0557a358117f474dc73cccd56529ad877a58a434d0",
+    "bytes": 14677
+  },
+  {
+    "repo": "noir-lang/sha512",
+    "sha": "e92ffb473f3264529a0793770f63a09946df50cc",
+    "path": "src/permutation.nr",
+    "source_url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/permutation.nr",
+    "sha256": "3ab0092b7436c9750d3e0f19bb4b351ae0591e177d985d532db3232d43a22cf6",
+    "bytes": 9801
+  },
+  {
+    "repo": "noir-lang/sha512",
+    "sha": "e92ffb473f3264529a0793770f63a09946df50cc",
+    "path": "src/generate_tables.nr",
+    "source_url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/generate_tables.nr",
+    "sha256": "7314dba3fc2cb73819f738ea814ab2f1cad823b0407113cd9de80cf6b2505a3f",
+    "bytes": 8771
+  },
+  {
+    "repo": "noir-lang/sha512",
+    "sha": "e92ffb473f3264529a0793770f63a09946df50cc",
+    "path": "src/tables.nr",
+    "source_url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/tables.nr",
+    "sha256": "1d5463e9de3c4949aacc5ad6bf800c837e425e5cd8af3bfb02e31f6125313839",
+    "bytes": 32673
+  },
+  {
+    "repo": "noir-lang/sha512",
+    "sha": "e92ffb473f3264529a0793770f63a09946df50cc",
+    "path": "Nargo.toml",
+    "source_url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/Nargo.toml",
+    "sha256": "48939efb9f7456738047788be4d0d452d375a0d9015a0ff39048946d86032e07",
+    "bytes": 100
+  },
+  {
+    "repo": "noir-lang/sha512",
+    "sha": "e92ffb473f3264529a0793770f63a09946df50cc",
+    "path": "src/encoding.nr",
+    "source_url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/encoding.nr",
+    "sha256": "f8c633a9b9faff3cbb1a24ef5bd0b2c43ea8293a71168ed4393a1c733ccdd4d0",
+    "bytes": 30441
+  },
+  {
+    "repo": "noir-lang/sha512",
+    "sha": "e92ffb473f3264529a0793770f63a09946df50cc",
+    "path": "src/formatting.nr",
+    "source_url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/formatting.nr",
+    "sha256": "37ed2a1caf1a01c22a4e416100277ba04a1483d5f308f1dbc6f367e5c3bdc5c0",
+    "bytes": 1903
+  }
+]

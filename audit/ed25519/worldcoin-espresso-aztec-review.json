@@ -1,0 +1,288 @@
+{
+  "scope": "Source review only in main workspace; one isolated SHA512 experiment after parent coordinated CPU availability. Exact file hashes are in sources.json. Repository inventories are complete recursive GitHub trees (truncated=false). Downloaded source files not listed in findings are retained as supporting artifacts, not claimed to have been fully reviewed.",
+  "inventory_worldcoin_public_repos": 156,
+  "findings": [
+    {
+      "name": "World ID native BabyJubJub EdDSA",
+      "source": {
+        "repo": "worldcoin/world-id-protocol",
+        "commit": "52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd",
+        "files": [
+          {
+            "path": "circom/babyjubjub/babyjubjub.circom",
+            "url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/babyjubjub/babyjubjub.circom"
+          },
+          {
+            "path": "circom/eddsa_poseidon2/eddsaposeidon2.circom",
+            "url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/eddsa_poseidon2/eddsaposeidon2.circom"
+          },
+          {
+            "path": "circom/verify_dlog/verify_dlog.circom",
+            "url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/verify_dlog/verify_dlog.circom"
+          },
+          {
+            "path": "circom/inverse_or_zero/inverse_or_zero.circom",
+            "url": "https://github.com/worldcoin/world-id-protocol/blob/52262f85d3dbdaa5b0cb0fc5dadc960c1e09e6bd/circom/inverse_or_zero/inverse_or_zero.circom"
+          }
+        ]
+      },
+      "observations": [
+        "The coordinate field is the BN254 scalar field, so coordinates need no foreign-field limbs. EdDSAPoseidon2Verifier uses Poseidon2 over affine coordinates and checks 8*(S*B-R-h*A)=identity.",
+        "A is explicitly on-curve, in the prime subgroup, and nonidentity. R is on-curve but need not be in the prime subgroup. Subgroup checking uses a fixed 251-bit double-and-add by the subgroup order.",
+        "The scalar multiplier accepts a strictly decomposed 254-bit base-field challenge, avoiding a separate reduction to the 251-bit scalar field. The group action supplies reduction only because its input is required to be in the prime subgroup.",
+        "VerifyDlog delegates the public A subgroup check to the external Rust verifier while still checking its curve equation. InverseOrZero binds x*inv=1-is_zero, x*is_zero=0, and inv*is_zero=0."
+      ],
+      "disposition": "Do not port the curve, hash, cofactored equation or external subgroup-check assumption: they change the Solana statement. Our prime-subgroup action already avoids unnecessary canonical reduction where sound, and our 8-root-plus-torsion decomposition is cheaper than a full fixed-order multiplication while preserving mixed torsion."
+    },
+    {
+      "name": "Worldcoin Semaphore Merkle circuits",
+      "source": {
+        "repo": "worldcoin/semaphore-mtb",
+        "commit": "3f56f6a425be50e3d4ab441f96a2e55acc52a068",
+        "files": [
+          {
+            "path": "prover/circuit_utils.go",
+            "url": "https://github.com/worldcoin/semaphore-mtb/blob/3f56f6a425be50e3d4ab441f96a2e55acc52a068/prover/circuit_utils.go"
+          }
+        ]
+      },
+      "observations": [
+        "ProofRound performs a Boolean direction selection followed by native Poseidon. Insertion/deletion circuits update native-field Merkle roots. ReducedModRCheck explicitly enforces canonical bit decompositions."
+      ],
+      "disposition": "No Ed25519/SHA512 or new foreign-field multiplication technique in the inspected implementation. Canonical integer-lift checks corroborate checks already present; no port."
+    },
+    {
+      "name": "Worldcoin Remainder GKR hashing and lookups",
+      "source": {
+        "repo": "worldcoin/Remainder_CE",
+        "commit": "5687fe7f3a077c75c374422ef79f22e3860de9c1",
+        "files": [
+          {
+            "path": "frontend/src/components/sha2_gkr.rs",
+            "url": "https://github.com/worldcoin/Remainder_CE/blob/5687fe7f3a077c75c374422ef79f22e3860de9c1/frontend/src/components/sha2_gkr.rs"
+          },
+          {
+            "path": "frontend/src/components/sha2_gkr/nonlinear_gates.rs",
+            "url": "https://github.com/worldcoin/Remainder_CE/blob/5687fe7f3a077c75c374422ef79f22e3860de9c1/frontend/src/components/sha2_gkr/nonlinear_gates.rs"
+          },
+          {
+            "path": "frontend/src/components/sha2_gkr/sha256_bit_decomp.rs",
+            "url": "https://github.com/worldcoin/Remainder_CE/blob/5687fe7f3a077c75c374422ef79f22e3860de9c1/frontend/src/components/sha2_gkr/sha256_bit_decomp.rs"
+          },
+          {
+            "path": "frontend/src/layouter/nodes/lookup.rs",
+            "url": "https://github.com/worldcoin/Remainder_CE/blob/5687fe7f3a077c75c374422ef79f22e3860de9c1/frontend/src/layouter/nodes/lookup.rs"
+          }
+        ]
+      },
+      "observations": [
+        "The SHA family helpers support 32- and 64-bit bit-decomposed words; the inspected full compression implementation is sha256_bit_decomp.rs. Rotations operate on bit MLE nodes, and inputs are constrained with b-b^2.",
+        "Choose is x*y+(1-x)*z. Majority and XOR are high-degree arithmetic expressions in a GKR circuit. Lookup nodes implement LogUp with multiplicities and Fiat-Shamir challenge layers."
+      ],
+      "disposition": "GKR layers, polynomial degree and proof costs are not R1CS constraints. Existing base-4 parity lookups already avoid per-bit multiplication costs. Native GKR/LogUp integration is a backend change, so no direct production patch."
+    },
+    {
+      "name": "Worldcoin execution and wallet wrappers",
+      "source": {
+        "repo": "worldcoin/world-chain",
+        "commit": "07338168de51fdafa31b4d4e3be7921ca06714f1",
+        "files": [
+          {
+            "path": "Cargo.toml",
+            "url": "https://github.com/worldcoin/world-chain/blob/07338168de51fdafa31b4d4e3be7921ca06714f1/Cargo.toml"
+          },
+          {
+            "path": "crates/evm/src/factory.rs",
+            "url": "https://github.com/worldcoin/world-chain/blob/07338168de51fdafa31b4d4e3be7921ca06714f1/crates/evm/src/factory.rs"
+          }
+        ]
+      },
+      "observations": [
+        "The manifest includes revm-precompile, ed25519-dalek and SHA-2 dependencies and SP1 proof backends. The inspected EVM factory wraps a generic ConfigureEvm executor and captures execution witnesses."
+      ],
+      "disposition": "These inspected paths do not implement a standalone Ed25519 R1CS gadget. Do not infer that a dependency or native precompile supplies cheaper R1CS signature arithmetic."
+    },
+    {
+      "name": "Worldcoin host crypto wrappers",
+      "source": {
+        "repo": "worldcoin/bedrock",
+        "commit": "80d56797ef5e7b195169c1a81ce4ddf2116411e1",
+        "files": [
+          {
+            "path": "bedrock/src/primitives/signer.rs",
+            "url": "https://github.com/worldcoin/bedrock/blob/80d56797ef5e7b195169c1a81ce4ddf2116411e1/bedrock/src/primitives/signer.rs"
+          }
+        ]
+      },
+      "observations": [
+        "P256Signer validates and caches a compressed SEC1 public key for host signing callbacks."
+      ],
+      "disposition": "Host wallet code, not in-circuit foreign-field arithmetic; no transferable constraint optimization."
+    },
+    {
+      "name": "Worldcoin existing proof loading",
+      "source": {
+        "repo": "worldcoin/semaphore-rs",
+        "commit": "9f90a92cca274b583b50c40df36e5ca8845def75",
+        "files": [
+          {
+            "path": "crates/semaphore/src/circuit.rs",
+            "url": "https://github.com/worldcoin/semaphore-rs/blob/9f90a92cca274b583b50c40df36e5ca8845def75/crates/semaphore/src/circuit.rs"
+          }
+        ]
+      },
+      "observations": [
+        "The code loads precompiled Circom matrices, proving keys and witness graphs keyed by supported tree depth."
+      ],
+      "disposition": "Proof artifact loading does not expose a new signature or SHA512 circuit optimization."
+    },
+    {
+      "name": "Espresso generic emulated arithmetic",
+      "source": {
+        "repo": "EspressoSystems/jellyfish",
+        "commit": "b1581c26f7195962d17fc5ff3768ac55db610ca1",
+        "files": [
+          {
+            "path": "relation/src/gadgets/emulated.rs",
+            "url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/relation/src/gadgets/emulated.rs"
+          },
+          {
+            "path": "relation/src/gadgets/ecc/emulated/twisted_edwards.rs",
+            "url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/relation/src/gadgets/ecc/emulated/twisted_edwards.rs"
+          },
+          {
+            "path": "relation/src/gadgets/ultraplonk/non_native_gates.rs",
+            "url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/relation/src/gadgets/ultraplonk/non_native_gates.rs"
+          }
+        ]
+      },
+      "observations": [
+        "Generic multiplication constrains a*b-k*p=c both modulo a power of two with bounded carries and modulo the native field. Convolution terms are accumulated through custom quadratic gates.",
+        "Emulated Edwards addition materializes x0*y1, x1*y0, x0*x1, y0*y1 and the denominator product, then checks the complete rational coordinate equations.",
+        "The separate two-component UltraPlonk non-native Rescue helpers explicitly require the target modulus bit size to be smaller than the evaluation field. That condition fails for Ed25519 coordinates over BN254."
+      ],
+      "disposition": "The generic complete Edwards equations are already used here with fused lazy expressions and stronger product reuse. Custom multiple-product gates do not map to one R1CS row. Keep our coefficient bounds, CRT product/square shortcuts and exact carry checks; no new arithmetic port."
+    },
+    {
+      "name": "Espresso MSM and Schnorr circuit",
+      "source": {
+        "repo": "EspressoSystems/jellyfish",
+        "commit": "b1581c26f7195962d17fc5ff3768ac55db610ca1",
+        "files": [
+          {
+            "path": "relation/src/gadgets/ecc/msm.rs",
+            "url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/relation/src/gadgets/ecc/msm.rs"
+          },
+          {
+            "path": "signature/src/gadgets/schnorr.rs",
+            "url": "https://github.com/EspressoSystems/jellyfish/blob/b1581c26f7195962d17fc5ff3768ac55db610ca1/signature/src/gadgets/schnorr.rs"
+          }
+        ]
+      },
+      "observations": [
+        "The native-curve Pippenger path builds point tables [0*P,...,(2^c-1)*P], decomposes scalar windows and binds (index,x,y) through lookup tables before accumulating windows.",
+        "The Schnorr gadget requires the curve coordinate field to be the circuit field and hashes the challenge with Rescue, then combines a fixed-base multiplication with a variable-base multiplication."
+      ],
+      "disposition": "Window lookups corroborate the current joint short-MSM table. A native Rescue Schnorr verifier is a different statement; no Ed25519/SHA512 substitution or direct row-count comparison is valid."
+    },
+    {
+      "name": "Aztec barretenberg P256 fixed-base and fake GLV",
+      "source": {
+        "repo": "AztecProtocol/aztec-packages",
+        "commit": "bb15fcbbe969f11a892272715fe59f0976b086ca",
+        "files": [
+          {
+            "path": "barretenberg/cpp/src/barretenberg/stdlib/primitives/biggroup/biggroup_secp256r1.hpp",
+            "url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/primitives/biggroup/biggroup_secp256r1.hpp"
+          },
+          {
+            "path": "barretenberg/cpp/src/barretenberg/stdlib/encryption/ecdsa/ecdsa_impl.hpp",
+            "url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/encryption/ecdsa/ecdsa_impl.hpp"
+          },
+          {
+            "path": "barretenberg/cpp/src/barretenberg/stdlib/primitives/biggroup/biggroup_tables.hpp",
+            "url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/primitives/biggroup/biggroup_tables.hpp"
+          }
+        ]
+      },
+      "observations": [
+        "The P256 path uses 8-bit fixed-base tables with deterministic offsets and a 128-bit half-GCD fake-GLV relation for the variable base. Coordinates use four binary limbs and an additional native-field representation.",
+        "Lookup tables bind byte windows to the scalar. The final deterministic offset is subtracted after the chain.",
+        "The inspected P256 implementation explicitly substitutes u2=2 for u2 in {0,+1,-1} and makes those cases invalid; it also uses incomplete table additions. These are completeness restrictions, not a method we can copy into a complete verifier."
+      ],
+      "disposition": "The fixed-base/window/offset and half-GCD ideas are already present in our circuit. Their custom plookup cost model cannot be copied as R1CS counts. Retain our torsion split, bounded selectable offset, and all scalar edge cases."
+    },
+    {
+      "name": "Aztec bigfield arithmetic",
+      "source": {
+        "repo": "AztecProtocol/aztec-packages",
+        "commit": "bb15fcbbe969f11a892272715fe59f0976b086ca",
+        "files": [
+          {
+            "path": "barretenberg/cpp/src/barretenberg/stdlib/primitives/bigfield/bigfield_impl.hpp",
+            "url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/primitives/bigfield/bigfield_impl.hpp"
+          }
+        ]
+      },
+      "observations": [
+        "mult_madd combines sums of products into one quotient/remainder check, estimates maximum values, and triggers reductions as required. This is analogous to our fused Eval/AssertZero strategy.",
+        "unsafe_evaluate_square_add describes a possible symmetry optimization but actually calls the ordinary multiply-add path at this pinned commit. Its custom gates can contain several limb products per gate."
+      ],
+      "disposition": "No new square shortcut to port: ours already has differentially tested CRT-binomial squaring. Backend custom multiplication gates and 68-bit limb choices do not imply an R1CS win under our lazy coefficient bounds."
+    },
+    {
+      "name": "Aztec SHA256 sparse tables",
+      "source": {
+        "repo": "AztecProtocol/aztec-packages",
+        "commit": "bb15fcbbe969f11a892272715fe59f0976b086ca",
+        "files": [
+          {
+            "path": "barretenberg/cpp/src/barretenberg/stdlib/hash/sha256/sha256.cpp",
+            "url": "https://github.com/AztecProtocol/aztec-packages/blob/bb15fcbbe969f11a892272715fe59f0976b086ca/barretenberg/cpp/src/barretenberg/stdlib/hash/sha256/sha256.cpp"
+          }
+        ]
+      },
+      "observations": [
+        "The code combines Choose with Sigma1 using base28 and Majority with Sigma0 using base16; message extension also combines the two small sigmas in base16 before normalization lookups.",
+        "Whole 64-bit SHA512 words would require about 308 bits in base28 or 256 bits in base16, exceeding the BN254 native field. Splitting words or using larger multi-output tables changes the cost model."
+      ],
+      "disposition": "Interesting for a separate batch-oriented experiment, but not a direct 64-bit port. Existing parity-only SHA512 remains the safe common decoding primitive; no unmeasured constraint claim."
+    },
+    {
+      "name": "Noir SHA512 rotation-aligned slices",
+      "source": {
+        "repo": "noir-lang/sha512",
+        "commit": "e92ffb473f3264529a0793770f63a09946df50cc",
+        "files": [
+          {
+            "path": "src/encoding.nr",
+            "url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/encoding.nr"
+          },
+          {
+            "path": "src/permutation.nr",
+            "url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/permutation.nr"
+          },
+          {
+            "path": "src/formatting.nr",
+            "url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/formatting.nr"
+          },
+          {
+            "path": "src/generate_tables.nr",
+            "url": "https://github.com/noir-lang/sha512/blob/e92ffb473f3264529a0793770f63a09946df50cc/src/generate_tables.nr"
+          }
+        ]
+      },
+      "observations": [
+        "The actual SHA512 implementation aligns bounded input slices with all rotation/shift cuts, permitting encoded rotation sums to be linear combinations of spread slices. It decodes five base4 lanes per lookup.",
+        "Its A/E layouts use nine slices, and message-extension words use twelve. Original layouts include 9-bit tables and a 7-bit slice. It has separate Majority and partial-Choose tables.",
+        "The isolated gnark adaptation preserves the shared parity-only Majority/Choose formulas and uses separate exact-width spread tables. One-bit slices use Boolean constraints. Replacing 9-bit slices by 8+1, and the lone 7-bit slice by 6+1, removes table overhead in R1CS.",
+        "Original input bytes remain individually bounded through the existing 8-bit spread table. Dense and spread recompositions occupy 64 and 128 bits; parity recomposition stays below 2^130; modular carry checks remain below 16 with total arithmetic below 2^68."
+      ],
+      "disposition": "Measured positive port in /tmp/mola-noirsha.LYrgP9: full Ed25519 52937 -> 50964 constraints; arithmetic core unchanged at 30072; standalone SHA512/64B 22778 -> 20724. Targeted hash, invalid-byte, forged-hint and exact-recomposition overflow tests pass; full module regression and vet passed in the isolated candidate. Production and adversarial tests were promoted to main after static review; main regression/proof results are recorded separately."
+    }
+  ],
+  "experiment_directory": "/tmp/mola-noirsha.LYrgP9",
+  "experiment_production_patch": "/tmp/mola-noirsha.LYrgP9/sha512-slicing.patch",
+  "experiment_tests_patch": "/tmp/mola-noirsha.LYrgP9/sha512-slicing-tests.patch",
+  "main_promotion": "Rotation-aligned SHA-512 production and tests applied; no temporary benchmark test ported."
+}

@@ -1,0 +1,53 @@
+{
+  "id": "ed25519-final-sha-parity-sharing-2026-10-11",
+  "workspace": "/Users/jorrit/orca/workspaces/zk-experiments/mola/gnark-gadgets",
+  "isolated_snapshot": "/tmp/mola-finalexp.OgGPeD",
+  "baseline_sha512_source": "/tmp/mola-final-sha512.orig.go",
+  "candidate_sha512_source": "/tmp/mola-finalexp.OgGPeD/hasher/sha512.go",
+  "baseline_sha256_hash": "bce1644254bbb40144567fd59a284d6f65e503861c9a2020a6095c21e37a2b2d",
+  "candidate_sha256_hash": "bd705cdd4e4426b527a45b5d54853bb40c965abadfd2492bc619d1d1e54e2c93",
+  "hypothesis": "Reuse base4 parity extraction to express majority and choice as exact dense integer identities, eliminating majority, choice, and base8-spread tables.",
+  "identities": [
+    "Maj(a,b,c)=(a+b+c-XOR(a,b,c))/2",
+    "Ch(a,b,c)=(b+c+XOR(a,c)-XOR(a,b))/2"
+  ],
+  "commands": [
+    "go test ./hasher -run ^TestSha512$ -count=1 -v",
+    "go test ./ed25519 -run ^TestVerify$ -count=1 -v",
+    "go test ./cmd/benchmark -run ^TestFinalFairComparison$ -count=1 -v"
+  ],
+  "constraints": {
+    "ed25519_32B_baseline": 56309,
+    "ed25519_32B_maj_only": 55565,
+    "ed25519_32B_maj_and_choice": 54834,
+    "ed25519_core_unchanged": 31969,
+    "sha512_64B_maj_only": 23509,
+    "sha512_64B_maj_and_choice": 22778,
+    "sha512_111B_maj_and_choice": 23054,
+    "p256_prehashed": 30367,
+    "p256_sha256_32B": 44461
+  },
+  "validation": {
+    "sha512_message_lengths": [
+      0,
+      3,
+      64,
+      111,
+      112,
+      128,
+      257
+    ],
+    "sha512_positive_negative_vectors": "pass, including wrong digest, out-of-range message byte and forged chunks",
+    "ed25519_32B_valid_signature": "pass",
+    "p256_prehashed_and_hashed_signatures": "both cs.IsSolved pass"
+  },
+  "certainty": "Exact compiled BN254 R1CS counts. No timing claims from this experiment.",
+  "proof": "Bit identities summed with weights2^i imply exact dense-word results. All parity extraction recompositions fit130 bits. Numerators are even, nonnegative, and<2^65, so inverse2 multiplication equals integerhalving.",
+  "port_cleanup": "Remove now-unused base8/choice/majority fields, tables, flags and branches; prototype forces choice=false solely to isolate the hypothesis.",
+  "promotion": "Ported to hasher/sha512.go with unused base-eight, majority and choice tables, flags and branches removed. Main counts match the isolated candidate.",
+  "promotion_commands": [
+    "go test ./hasher -run TestSha512 -v",
+    "go test ./ed25519 -run TestVerify -v",
+    "go run ./cmd/benchmark -only \"P-256 ECDSA verification + SHA-256\" -runs 5"
+  ]
+}

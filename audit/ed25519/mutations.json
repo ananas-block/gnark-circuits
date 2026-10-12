@@ -1,0 +1,26 @@
+[
+  {
+    "mutation": "nonzero_u",
+    "test": "^TestRejectsZeroReconstruction$",
+    "detected": true,
+    "output": "--- FAIL: TestRejectsZeroReconstruction (0.74s)\n    soundness_test.go:263: zero reconstruction forged an invalid signature\nFAIL\nFAIL\tgnark-gadgets/ed25519\t1.274s\nFAIL\n"
+  },
+  {
+    "mutation": "canonical_s",
+    "test": "^TestRejectsBadSignaturesAndHints/S_plus_L$",
+    "detected": true,
+    "output": "--- FAIL: TestRejectsBadSignaturesAndHints (0.85s)\n    --- FAIL: TestRejectsBadSignaturesAndHints/S_plus_L (0.10s)\n        soundness_test.go:66: invalid signature accepted\nFAIL\nFAIL\tgnark-gadgets/ed25519\t1.481s\nFAIL\n"
+  },
+  {
+    "mutation": "terminal_curve",
+    "test": "^TestFinalCurveRejectsFreeCoincidentChord$",
+    "detected": true,
+    "output": "--- FAIL: TestFinalCurveRejectsFreeCoincidentChord (0.02s)\n    soundness_test.go:239: free coincident chord slope accepted\nFAIL\nFAIL\tgnark-gadgets/ed25519\t0.652s\nFAIL\n"
+  },
+  {
+    "mutation": "projected_quotient_bound",
+    "test": "^TestEdProjectedReducerRejectsAliases$",
+    "detected": true,
+    "output": "--- FAIL: TestEdProjectedReducerRejectsAliases (0.09s)\n    --- FAIL: TestEdProjectedReducerRejectsAliases/negativefalse/plainfalse (0.03s)\n        ed_projection_test.go:282: forged remainder 49585460914597928490167773134620907114776225952486478849090524382754839657096 accepted or hint not reached\n    --- FAIL: TestEdProjectedReducerRejectsAliases/negativefalse/plaintrue (0.02s)\n        ed_projection_test.go:282: forged remainder 49585460914597928490167773134620907114776225952486478849090524382754839657096 accepted or hint not reached\n    --- FAIL: TestEdProjectedReducerRejectsAliases/negativetrue/plainfalse (0.02s)\n        ed_projection_test.go:282: forged remainder 49585460914597928490167773134620907114776225952486478849090524382754839657096 accepted or hint not reached\n    --- FAIL: TestEdProjectedReducerRejectsAliases/negativetrue/plaintrue (0.02s)\n        ed_projection_test.go:282: forged remainder 49585460914597928490167773134620907114776225952486478849090524382754839657096 accepted or hint not reached\nFAIL\nFAIL\tgnark-gadgets/p256/emfield\t0.520s\nFAIL\n"
+  }
+]

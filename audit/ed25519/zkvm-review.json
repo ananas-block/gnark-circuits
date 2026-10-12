@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-11",
+  "pins": {
+    "zcash/halo2": {
+      "sha": "2d54aaf07c8135d0ce54313048999b4002b4cfbf",
+      "date": "2026-10-09T21:35:46Z",
+      "tree_entries": 296,
+      "tree_truncated": false
+    },
+    "zcash/sapling-crypto": {
+      "sha": "88a7946b4a3066787776e11f0a502654167e022d",
+      "date": "2026-09-30T21:19:53Z",
+      "tree_entries": 69,
+      "tree_truncated": false
+    },
+    "zcash/orchard": {
+      "sha": "616a669df8c9a59c33d47064d3ce04b25d026b2e",
+      "date": "2026-09-30T22:15:05Z",
+      "tree_entries": 133,
+      "tree_truncated": false
+    },
+    "0xMiden/miden-vm": {
+      "sha": "4016cf0532659da5368c97859ff869500c650ffb",
+      "date": "2026-10-09T17:47:03Z",
+      "tree_entries": 3778,
+      "tree_truncated": false
+    },
+    "0xPolygonHermez/zisk": {
+      "sha": "1e22630bb7e143c30705a1603ed87cfd3da8c6ec",
+      "date": "2026-10-09T20:57:59Z",
+      "tree_entries": 3164,
+      "tree_truncated": false
+    },
+    "0xPolygonHermez/pil2-proofman": {
+      "sha": "eda04742b64abe0e5322a8231f0155438ffb62fe",
+      "date": "2026-10-09T19:39:10Z",
+      "tree_entries": 1174,
+      "tree_truncated": false
+    }
+  },
+  "source_manifest": "/tmp/mola-source-review/sources.json",
+  "findings": [
+    {
+      "project": "Zcash Halo2",
+      "files": [
+        "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/mul_fixed.rs",
+        "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/constants.rs",
+        "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/mul_fixed/full_width.rs",
+        "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/mul/incomplete.rs",
+        "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/add_incomplete.rs",
+        "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/witness_point.rs"
+      ],
+      "observations": [
+        "Fixed windows have8 points; x is selected bydegree7 interpolation. Witnessu satisfiesu^2=y+z; fixedtablegeneration additionally requiresz-y nonsquare for eachselected point. On-curve validation is explicit.",
+        "Tables usepositivek+2 offsets withlast-window compensation, andcomplete finaladdition. Variable mul derivesY_A=(lambda1+lambda2)(xA-xR)/2 toavoid a separateY advice cell. Incompleteaddition has two high-degree rational identities."
+      ],
+      "transfer": "The z discriminator cannot exist for ourwindow containingbothP and-P: square/nonsquare requirements contradict. Restricting64 positive rows stilldoesnotjustify the foreign-field square/root/oncurve costs. Its separationofcoordinate/sign suggests the independentlyvalidated signed-magnitude table reduction.",
+      "experiment": "/tmp/mola-zcash-signexp.Z91rY8/experiment.json:30324->30072core,53189->52937full; entireEd tests passed. This isnot a z+u^2 implementation.",
+      "other_disposition": "ImplicitY was previously measuredunhelpful(+44 rows onolder6x43snapshot). Rationaldoubling/addition wouldmaterialize foreign-field coordinates andhigherdegree expressions; currentlazy128-bitrelation path isretained."
+    },
+    {
+      "project": "Zcash Sapling",
+      "files": [
+        "https://github.com/zcash/sapling-crypto/blob/88a7946b4a3066787776e11f0a502654167e022d/src/circuit/ecc.rs"
+      ],
+      "observations": [
+        "Bellman nativeBLS12-381-scalar Jubjub gadget uses3-bit fixed tables, completeEdwards addition, explicitcurve interpretation andthree-doubling small-order rejection.",
+        "Addition factorscrossproducts with(u1+v1)(u2+v2). Doubling usesT=(u+v)^2,A=uv,C=d*A^2."
+      ],
+      "transfer": "Addition factoring agrees withthe alreadyacceptedCircom-derived numerator optimization. Nativecurve/small-order rules do notreplaceSolana decoding orourprime/torsion split. MaterializingA,C inforeign arithmetic wouldaddreductions; no newmeasuredwin claimed."
+    },
+    {
+      "project": "Zcash Orchard",
+      "files": [
+        "https://github.com/zcash/orchard/blob/616a669df8c9a59c33d47064d3ce04b25d026b2e/src/constants/fixed_bases.rs",
+        "https://github.com/zcash/orchard/blob/616a669df8c9a59c33d47064d3ce04b25d026b2e/src/constants/fixed_bases/value_commit_v.rs",
+        "https://github.com/zcash/orchard/blob/616a669df8c9a59c33d47064d3ce04b25d026b2e/Cargo.toml"
+      ],
+      "observations": [
+        "Precomputedgenerator,U,Z tables supplyHalo2 FixedPoint. Fullnative scalars use85 3-bitwindows;64-bitshortsigned scalars use22. Cargo useshalo2_gadgets0.6."
+      ],
+      "transfer": "The table-generation/validation discipline isuseful;3-bit nativefield gatecosts are not R1CS foreign-fieldcosts. Our37 signed7-bitwindows andexacttable bindingremain."
+    },
+    {
+      "project": "Miden currentcrypto andVM",
+      "files": [
+        "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/crypto/src/dsa/eddsa_25519_sha512/mod.rs",
+        "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/lib/core/asm/crypto/dsa/eddsa_25519_sha512.masm",
+        "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles/src/math/curve/ed25519.rs",
+        "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles/src/math/ed25519_order.rs",
+        "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles/src/math/curve/short_weierstrass.rs"
+      ],
+      "observations": [
+        "CurrentOct9HEAD hasEd25519 andSHA512 precompiles; earlierrelease removalnotes are stale forthisHEAD. Crypto publicverify callsdalek nonstrictverify, whileMASM documentsstrictercanonical encodings andsmall-order rejection.",
+        "MASM hashesexactR||A||M, usesbirationalshortWeierstrass coordinates, andnegateschallenge in8L scalar ring toretainmixedtorsion.",
+        "Hostscalar multiplication usesJacobiancoordinates andonefinalinversion."
+      ],
+      "transfer": "Do notportMiden canonicalpointpolicy toSolana. Its8L coefficientdiscipline corroboratesourtorsion handling. Host-only projectivewitness generationis a promising timingexperiment; no measurementyet."
+    },
+    {
+      "project": "Miden SHA512 AIR",
+      "files": [
+        "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles-air/src/hash/sha512/compression/mod.rs",
+        "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles-air/src/hash/sha512/compression/program.rs",
+        "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/precompiles-air/src/primitives/byte_pair_lut.rs",
+        "https://github.com/0xMiden/miden-vm/blob/4016cf0532659da5368c97859ff869500c650ffb/crates/lib/core/asm/precompiles/hashes/sha512.masm"
+      ],
+      "observations": [
+        "Compression programhas4096 slots,53main and13aux columns; operands/results use8bytes,wordprovenance andmetadata areboundthroughlookup buses.",
+        "Onebyte-XOR relation alsoimplementsAND/ANDNOT throughaffine identities andrangechecks.64-bitaddition uses2 bounded32-bithalf equations;rotations usebiasedu16 decompositions matched toGoldilocks."
+      ],
+      "transfer": "SharedXOR relations corroborateourparity-onlyMaj/Ch savings alreadyapplied. BN254 canholdwhole64-bitsums and128-bitspreads, soGoldilocks splittingisnot adirectimprovement. AIRslots are notR1CS constraints; no crossbackend countcomparisonmade."
+    },
+    {
+      "project": "ZisK /0xPolygonHermez",
+      "files": [
+        "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/pil/arith_eq.pil",
+        "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/pil/equations/arith256_mod.pil",
+        "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/pil/equations/secp256r1_dbl.pil",
+        "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/src/arith_eq_generator.rs",
+        "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/arith_eq/src/executors/arith256_mod.rs",
+        "https://github.com/0xPolygonHermez/zisk/blob/1e22630bb7e143c30705a1603ed87cfd3da8c6ec/precompiles/sha256f/pil/sha256f.pil"
+      ],
+      "observations": [
+        "ArithEq provesexplicitintegerquotient/carry equations over16-bitoperand chunks,16clocks,two coefficientchunks perclock. Curves includeP256,secp256k1,BN254; terminalquotientchunks allow22bits,remainders havealias-freecomparisons.",
+        "GeneratedRust witnessandPIL equations shareonegenerator. InspectedhashacceleratorisSHA256-f, withbitcolumns and72row scheduleinspiredbyRISCZero. Untruncated3164-entrypinnedtree contains no dedicatedEd25519/SHA512 namedsourcepath."
+      ],
+      "transfer": "Quotient/carrybounds andgeneratedcertificatechecks agree withourcurrentnon-native proofdiscipline. Theirsmall-fieldPIL convolutioncustomgates do nottranslateinto cheaperR1CS multiplication thanourCRT. No Ed25519/SHA512 acceleratorclaim andno newwin claimed."
+    },
+    {
+      "project": "pil2-proofman",
+      "files": [
+        "https://github.com/0xPolygonHermez/pil2-proofman/blob/eda04742b64abe0e5322a8231f0155438ffb62fe/pil2-components/lib/std/pil/std_lookup.pil",
+        "https://github.com/0xPolygonHermez/pil2-proofman/blob/eda04742b64abe0e5322a8231f0155438ffb62fe/pil2-components/lib/std/pil/std_range_check.pil",
+        "https://github.com/0xPolygonHermez/pil2-proofman/blob/eda04742b64abe0e5322a8231f0155438ffb62fe/examples/hashes/pil/sha2.pil"
+      ],
+      "observations": [
+        "UsesLogUp assumes/proves buses withoperationIDs andselectorbinarychecks; supportsrangedynamic/multi-rangetables."
+      ],
+      "transfer": "The lookup/rangeconcepts arealreadyused inourBSB22 circuit. Backend-specifictracegates/rows are notproofsofR1CS savings. This separatelypinnedrepositoryHEAD isnot claimedtobeZisK's crates.io1.3.2-alpha source."
+    }
+  ],
+  "scope": "Sourceoptimizationreview,not a securityaudit. SP1,RISCZero,Lighter reviewedbyparentagent. No workspaceedits."
+}

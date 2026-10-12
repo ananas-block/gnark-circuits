@@ -1,0 +1,17 @@
+{
+  "id": "halo2-inspired-signed-magnitude-2026-10-11",
+  "source": "https://github.com/zcash/halo2/blob/2d54aaf07c8135d0ce54313048999b4002b4cfbf/halo2_gadgets/src/ecc/chip/mul_fixed.rs",
+  "interpretation": "Halo2 sign-discrimination review motivated separating signed-table magnitude. This candidate does not use z+u^2, which is incompatible with windows containing both P and -P.",
+  "snapshot": "/tmp/mola-zcash-signexp.Z91rY8",
+  "core_baseline": 30324,
+  "full_baseline": 53189,
+  "core_candidate": 30072,
+  "full_candidate": 52937,
+  "tests": [
+    "go test ./ed25519 -count=1",
+    "go test ./ed25519 -run ^(TestCoreCost|TestVerify)$ -count=1 -v"
+  ],
+  "result": "all passed, including fixed scalar edges,914CCTV, supplied-challenge torsion/zero-S cases, and adversarial tests",
+  "proof": "For index i=j+2^(w-1)*b, the signed odddigit2i-2^w+1 has magnitude2m+1 withm=j ifb=1 andm=2^(w-1)-1-j otherwise. The magnitude bits are Select(b,jbit,1-jbit). Select a positive-half point, then flip only y; fp.Select propagates signed limb bounds. Width1 retains original selection.",
+  "patch": "/tmp/mola-zcash-signexp.Z91rY8/signed-magnitude.patch"
+}
