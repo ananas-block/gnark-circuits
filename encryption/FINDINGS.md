@@ -164,10 +164,10 @@ then ct[h:] in 31-byte chunks]` with `h = min(27, len(ct))`. A host decrypts wit
 calls, and `crypto/aes` CTR. `ecies_test.go` runs this mirror. It also rejects a tampered
 ciphertext and a foreign recipient key, and asserts one BSB22 commitment.
 
-Cost: key agreement 30,437 + AES-CTR 6,830 + about 1,120 for the transcript and KDF
-(two Poseidon calls, canonical splits, one 7-input Poseidon), which gives 38,387 at
-16 B. At 48 B the total is 41,134. Without lookups it is 163,606 at 16 B and 200,214
-at 48 B.
+Cost (gnark v0.16.4, `go run ./cmd/benchmark`): key agreement 25,359 + AES-CTR
+6,830 + 2,866 for the transcript and key schedule (one 7-input Poseidon, four
+Poseidon calls and three 256-bit decompositions) gives 35,055 at 16 B. At 40 B
+the total is 37,727 and at 48 B it is 37,802.
 
 ### gnark std baseline
 
