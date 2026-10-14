@@ -1,1 +1,4 @@
 ed25519/testdata/oracle/target/
+
+# Review-run findings exports
+v*-findings-*.csv
