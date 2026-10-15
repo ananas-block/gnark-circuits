@@ -7,8 +7,8 @@ import (
 	"github.com/consensys/gnark/constraint/solver"
 	"github.com/consensys/gnark/frontend"
 
+	"github.com/ananas-block/gnark-circuits/internal/emfield"
 	"github.com/ananas-block/gnark-circuits/internal/lookup"
-	"github.com/ananas-block/gnark-circuits/p256/emfield"
 )
 
 // SHA-512 uses typed base-4 spread tables whose slices end at rotation cuts.

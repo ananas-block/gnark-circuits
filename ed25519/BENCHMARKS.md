@@ -1,4 +1,7 @@
-# Ed25519 benchmarks
+# Ed25519 historical benchmarks
+
+These measurements predate the X25519 migration; P-256 is no longer included.
+The current benchmark report is [../BENCHMARKS.md](../BENCHMARKS.md).
 
 Measured on Apple M5 Pro with Go 1.27.1, gnark 0.16.3 and BN254 Groth16,
 working tree based on fdce0f9. Final benchmark rows ran sequentially after
@@ -77,7 +80,6 @@ python3 audit/ed25519/check-identities.py
 python3 audit/ed25519/check-mutations.py
 go test ./ed25519 -run '^$' -bench '^BenchmarkArithmeticProve$' -benchtime=5x -count=1
 go run ./cmd/benchmark -only Ed25519 -runs 5 -out /tmp/ed25519.md
-go run ./cmd/benchmark -only 'P-256 ECDSA verification, lookup' -runs 5 -out /tmp/p256.md
 ```
 
 Final signature snapshots:

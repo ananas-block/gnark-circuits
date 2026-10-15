@@ -7,7 +7,7 @@ import (
 	"github.com/consensys/gnark/constraint/solver"
 	"github.com/consensys/gnark/frontend"
 
-	"github.com/ananas-block/gnark-circuits/p256/emfield"
+	"github.com/ananas-block/gnark-circuits/internal/emfield"
 )
 
 func (c *curve) lowBits(v frontend.Variable, n int) []frontend.Variable {

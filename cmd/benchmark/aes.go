@@ -3,6 +3,7 @@ package main
 import (
 	stdaes "crypto/aes"
 	"crypto/cipher"
+	"crypto/ecdh"
 	"math/big"
 
 	"github.com/consensys/gnark/frontend"
@@ -54,7 +55,7 @@ func buildAESCtr(n int) func(i int) (aesCtr, aesCtr, error) {
 
 type eciesEnvelope struct {
 	EphemeralSk [32]frontend.Variable
-	RecipientPk [65]frontend.Variable
+	RecipientPk [32]frontend.Variable
 	Plaintext   []frontend.Variable
 	Packed      [4]frontend.Variable `gnark:",public"`
 	Ciphertext  []frontend.Variable  `gnark:",public"`
@@ -108,13 +109,22 @@ func hostKeySchedule(sharedSecret *big.Int, info []byte) ([]byte, []byte, error)
 func buildEciesEnvelope(n int) func(i int) (eciesEnvelope, eciesEnvelope, error) {
 	return func(i int) (eciesEnvelope, eciesEnvelope, error) {
 		blank := eciesEnvelope{Plaintext: make([]frontend.Variable, n), Ciphertext: make([]frontend.Variable, n)}
-		pair, err := p256PairOf(i)
+		scalar := inputBytes(i, 32, 11)
+		ephemeral, err := ecdh.X25519().NewPrivateKey(scalar)
 		if err != nil {
 			return eciesEnvelope{}, eciesEnvelope{}, err
 		}
-		recipientLo, recipientHi := splitLoHi(compressedKey(pair.recipient))
-		ephemeralLo, ephemeralHi := splitLoHi(compressedKey(pair.ephemeral))
-		sharedLo, sharedHi := splitLoHi(pair.shared)
+		recipient, err := ecdh.X25519().NewPrivateKey(inputBytes(i, 32, 29))
+		if err != nil {
+			return eciesEnvelope{}, eciesEnvelope{}, err
+		}
+		shared, err := ephemeral.ECDH(recipient.PublicKey())
+		if err != nil {
+			return eciesEnvelope{}, eciesEnvelope{}, err
+		}
+		recipientLo, recipientHi := splitLoHi(recipient.PublicKey().Bytes())
+		ephemeralLo, ephemeralHi := splitLoHi(ephemeral.PublicKey().Bytes())
+		sharedLo, sharedHi := splitLoHi(shared)
 		secret, err := poseidon.Hash([]*big.Int{
 			encryption.SecretTagValue(encryption.MergeSecretTag),
 			sharedLo, sharedHi, ephemeralLo, ephemeralHi, recipientLo, recipientHi,
@@ -132,8 +142,8 @@ func buildEciesEnvelope(n int) func(i int) (eciesEnvelope, eciesEnvelope, error)
 			return eciesEnvelope{}, eciesEnvelope{}, err
 		}
 		w := eciesEnvelope{Plaintext: make([]frontend.Variable, n), Ciphertext: make([]frontend.Variable, n)}
-		fill(w.EphemeralSk[:], pair.ephemeral.scalar.FillBytes(make([]byte, 32)))
-		fill(w.RecipientPk[:], pair.recipient.uncompressed())
+		fill(w.EphemeralSk[:], scalar)
+		fill(w.RecipientPk[:], recipient.PublicKey().Bytes())
 		w.Packed = [4]frontend.Variable{recipientLo, recipientHi, ephemeralLo, ephemeralHi}
 		fill(w.Plaintext, plaintext)
 		fill(w.Ciphertext, ciphertext)

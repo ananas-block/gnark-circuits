@@ -39,12 +39,12 @@ cases = [
     ),
     (
         "projected_quotient_bound",
-        "p256/emfield/plain.go",
+        "internal/emfield/plain.go",
         "\tf.rc.Check(api.Add(kExpr, offset), kBits)",
         "",
         "^TestEdProjectedReducerRejectsAliases$",
         "forged remainder 49585460914597928490167773134620907114776225952486478849090524382754839657096 accepted",
-        "./p256/emfield",
+        "./internal/emfield",
     ),
 ]
 results = []

@@ -7,49 +7,44 @@ setup and witness construction are excluded, and one proof per circuit is
 verified. x10 is ten independent instances with distinct inputs in one
 circuit, so the lookup variants share one table and one BSB22 commitment.
 Hash inputs are private and each hash instance exposes its digest bytes.
-P-256 rows take private scalars, keys and signatures and expose the shared x
-bytes (ECDH), the six packed key-agreement outputs (AgreeKey) or the signer's
-x bytes (ECDSA); the gnark std baseline exposes the public key as emulated
-elements and uses the fake-GLV scalar multiplication described in
-p256/FINDINGS.md.
+X25519 rows take private scalar and peer bytes and expose the shared secret
+bytes (ECDH) or the six packed key-agreement outputs (AgreeKey).
 AES-256-CTR rows take a private 32-byte key and private plaintext bytes and
 expose the 12-byte nonce and the ciphertext bytes. ECIES envelope rows add
-P-256 key agreement, the Poseidon transcript and Zolana's key schedule, and expose
+X25519 key agreement, the Poseidon transcript and Zolana's key schedule, and expose
 the packed recipient and ephemeral keys and the ciphertext bytes.
 Ed25519 rows expose the original public-key and message bytes and keep the
 signature private; SHA-512 of R || public key || message is in the circuit.
 
-## 2026-10-12 23:29 UTC — d75c681 — Apple M5 Pro — gnark v0.16.4
+## 2026-10-15 16:12 UTC — bf92bcd+dirty — Apple M5 Pro — gnark v0.16.4
 
 ### Hasher
 
 | Circuit | BSB22 | Constraints x1 | Proving x1 (ms) | Constraints x10 | Proving x10 (ms) |
 |---|---|---:|---:|---:|---:|
-| SHA-512 lookup, 64 B message (one compression) | yes | 20,724 | 167.9 | 193,701 | 974.8 |
-| SHA-512 lookup, 128 B message (two compressions) | yes | 35,588 | 360.5 | 342,283 | 1309.8 |
+| SHA-512 lookup, 64 B message (one compression) | yes | 20,724 | 129.0 | 193,701 | 555.2 |
+| SHA-512 lookup, 128 B message (two compressions) | yes | 35,588 | 233.2 | 342,283 | 1138.2 |
 
-### P-256
+### X25519
 
 | Circuit | BSB22 | Constraints x1 | Proving x1 (ms) | Constraints x10 | Proving x10 (ms) |
 |---|---|---:|---:|---:|---:|
-| P-256 ECDH (ECDH) | yes | 20,730 | 124.2 | 177,858 | 821.9 |
-| P-256 key agreement (AgreeKey) | yes | 25,359 | 121.4 | 224,327 | 814.8 |
-| P-256 ECDSA verification (VerifyECDSA) | yes | 25,896 | 112.1 | 230,350 | 815.2 |
-| P-256 ECDSA gnark std ecdsa IsValid (fake-GLV, unsound) | yes | 148,870 | 474.1 | 1,253,166 | 3149.2 |
+| X25519 ECDH, lookup | yes | 21,221 | 85.8 | 199,740 | 592.7 |
+| X25519 key agreement (AgreeKey), lookup | yes | 25,914 | 99.9 | 246,663 | 647.5 |
 
 ### Ed25519
 
 | Circuit | BSB22 | Constraints x1 | Proving x1 (ms) | Constraints x10 | Proving x10 (ms) |
 |---|---|---:|---:|---:|---:|
-| Ed25519 verification + SHA-512, 32 B message (Solana) | yes | 50,648 | 306.9 | 461,341 | 3089.9 |
+| Ed25519 verification + SHA-512, 32 B message (Solana) | yes | 50,648 | 255.7 | 461,341 | 1170.7 |
 
 ### Encryption
 
 | Circuit | BSB22 | Constraints x1 | Proving x1 (ms) | Constraints x10 | Proving x10 (ms) |
 |---|---|---:|---:|---:|---:|
-| AES-256-CTR spread lookup, 16 B (Cipher.CTREncrypt) | yes | 6,830 | 23.6 | 33,819 | 138.7 |
-| AES-256-CTR spread lookup, 40 B (Cipher.CTREncrypt) | yes | 9,502 | 50.1 | 60,545 | 168.1 |
-| AES-256-CTR spread lookup, 48 B (Cipher.CTREncrypt) | yes | 9,577 | 32.2 | 61,285 | 161.2 |
-| ECIES envelope P-256 + Poseidon KDF + AES-256-CTR, 16 B (Envelope.Seal) | yes | 35,055 | 150.2 | 286,806 | 1134.1 |
-| ECIES envelope P-256 + Poseidon KDF + AES-256-CTR, 40 B (Envelope.Seal) | yes | 37,727 | 162.7 | 313,532 | 1048.6 |
-| ECIES envelope P-256 + Poseidon KDF + AES-256-CTR, 48 B (Envelope.Seal) | yes | 37,802 | 182.6 | 314,272 | 1075.9 |
+| AES-256-CTR spread lookup, 16 B (Cipher.CTREncrypt) | yes | 6,830 | 19.2 | 33,819 | 90.9 |
+| AES-256-CTR spread lookup, 40 B (Cipher.CTREncrypt) | yes | 9,502 | 26.0 | 60,545 | 133.4 |
+| AES-256-CTR spread lookup, 48 B (Cipher.CTREncrypt) | yes | 9,577 | 26.2 | 61,285 | 135.9 |
+| ECIES envelope X25519 + Poseidon KDF + AES-256-CTR, 16 B (Envelope.Seal) | yes | 35,610 | 124.0 | 309,142 | 788.2 |
+| ECIES envelope X25519 + Poseidon KDF + AES-256-CTR, 40 B (Envelope.Seal) | yes | 38,282 | 126.3 | 335,868 | 869.6 |
+| ECIES envelope X25519 + Poseidon KDF + AES-256-CTR, 48 B (Envelope.Seal) | yes | 38,357 | 127.1 | 336,608 | 858.0 |

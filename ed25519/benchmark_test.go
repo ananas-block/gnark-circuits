@@ -13,7 +13,7 @@ import (
 )
 
 // This test-only boundary permits a like-for-like arithmetic comparison with
-// the prehashed P-256 benchmark. The public API always computes SHA-512.
+// a prehashed signature benchmark. The public API always computes SHA-512.
 type arithmeticBenchmarkCircuit struct {
 	PublicKey [32]frontend.Variable `gnark:",public"`
 	Signature [64]frontend.Variable

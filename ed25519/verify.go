@@ -4,7 +4,7 @@ import (
 	"github.com/consensys/gnark/frontend"
 
 	"github.com/ananas-block/gnark-circuits/hasher"
-	"github.com/ananas-block/gnark-circuits/p256/emfield"
+	"github.com/ananas-block/gnark-circuits/internal/emfield"
 )
 
 // Inputs are standard Ed25519 encodings: PublicKey is compressed Edwards y,

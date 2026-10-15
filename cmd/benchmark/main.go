@@ -165,14 +165,11 @@ setup and witness construction are excluded, and one proof per circuit is
 verified. x10 is ten independent instances with distinct inputs in one
 circuit, so the lookup variants share one table and one BSB22 commitment.
 Hash inputs are private and each hash instance exposes its digest bytes.
-P-256 rows take private scalars, keys and signatures and expose the shared x
-bytes (ECDH), the six packed key-agreement outputs (AgreeKey) or the signer's
-x bytes (ECDSA); the gnark std baseline exposes the public key as emulated
-elements and uses the fake-GLV scalar multiplication described in
-p256/FINDINGS.md.
+X25519 rows take private scalar and peer bytes and expose the shared secret
+bytes (ECDH) or the six packed key-agreement outputs (AgreeKey).
 AES-256-CTR rows take a private 32-byte key and private plaintext bytes and
 expose the 12-byte nonce and the ciphertext bytes. ECIES envelope rows add
-P-256 key agreement, the Poseidon transcript and Zolana's key schedule, and expose
+X25519 key agreement, the Poseidon transcript and Zolana's key schedule, and expose
 the packed recipient and ephemeral keys and the ciphertext bytes.
 Ed25519 rows expose the original public-key and message bytes and keep the
 signature private; SHA-512 of R || public key || message is in the circuit.
@@ -187,7 +184,7 @@ signature private; SHA-512 of R || public key || message is in the circuit.
 		notes = append(notes, m.err.Error())
 		return fmt.Sprintf("—[^%d]", len(notes))
 	}
-	for _, section := range []string{sectionHasher, sectionP256, sectionEd25519, sectionEncryption} {
+	for _, section := range []string{sectionHasher, sectionX25519, sectionEd25519, sectionEncryption} {
 		header := false
 		for _, res := range results {
 			if res.row.section != section {

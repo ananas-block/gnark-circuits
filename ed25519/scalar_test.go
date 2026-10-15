@@ -11,7 +11,7 @@ import (
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 
-	"github.com/ananas-block/gnark-circuits/p256/emfield"
+	"github.com/ananas-block/gnark-circuits/internal/emfield"
 )
 
 type fixedBaseCircuit struct {

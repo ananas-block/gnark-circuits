@@ -52,7 +52,7 @@ func rowOf[T instance](section, name string, build func(i int) (blank, assigned 
 const (
 	sectionHasher     = "Hasher"
 	sectionEncryption = "Encryption"
-	sectionP256       = "P-256"
+	sectionX25519     = "X25519"
 	sectionEd25519    = "Ed25519"
 )
 
@@ -61,16 +61,14 @@ func rows() []row {
 		rowOf(sectionHasher, "SHA-512 lookup, 64 B message (one compression)", buildSha512(64)),
 		rowOf(sectionHasher, "SHA-512 lookup, 128 B message (two compressions)", buildSha512(128)),
 		rowOf(sectionEd25519, "Ed25519 verification + SHA-512, 32 B message (Solana)", buildEd25519(32)),
-		rowOf(sectionP256, "P-256 ECDH (ECDH)", buildP256ECDH),
-		rowOf(sectionP256, "P-256 key agreement (AgreeKey)", buildP256AgreeKey),
-		rowOf(sectionP256, "P-256 ECDSA verification (VerifyECDSA)", buildP256ECDSA),
-		rowOf(sectionP256, "P-256 ECDSA gnark std ecdsa IsValid (fake-GLV, unsound)", buildP256StdECDSA),
+		rowOf(sectionX25519, "X25519 ECDH, lookup", buildX25519ECDH()),
+		rowOf(sectionX25519, "X25519 key agreement (AgreeKey), lookup", buildX25519AgreeKey()),
 		rowOf(sectionEncryption, "AES-256-CTR spread lookup, 16 B (Cipher.CTREncrypt)", buildAESCtr(16)),
 		rowOf(sectionEncryption, "AES-256-CTR spread lookup, 40 B (Cipher.CTREncrypt)", buildAESCtr(40)),
 		rowOf(sectionEncryption, "AES-256-CTR spread lookup, 48 B (Cipher.CTREncrypt)", buildAESCtr(48)),
-		rowOf(sectionEncryption, "ECIES envelope P-256 + Poseidon KDF + AES-256-CTR, 16 B (Envelope.Seal)", buildEciesEnvelope(16)),
-		rowOf(sectionEncryption, "ECIES envelope P-256 + Poseidon KDF + AES-256-CTR, 40 B (Envelope.Seal)", buildEciesEnvelope(40)),
-		rowOf(sectionEncryption, "ECIES envelope P-256 + Poseidon KDF + AES-256-CTR, 48 B (Envelope.Seal)", buildEciesEnvelope(48)),
+		rowOf(sectionEncryption, "ECIES envelope X25519 + Poseidon KDF + AES-256-CTR, 16 B (Envelope.Seal)", buildEciesEnvelope(16)),
+		rowOf(sectionEncryption, "ECIES envelope X25519 + Poseidon KDF + AES-256-CTR, 40 B (Envelope.Seal)", buildEciesEnvelope(40)),
+		rowOf(sectionEncryption, "ECIES envelope X25519 + Poseidon KDF + AES-256-CTR, 48 B (Envelope.Seal)", buildEciesEnvelope(48)),
 	}
 }
 

@@ -16,33 +16,22 @@ import (
 const eciesPlaintextBytes = 40
 
 type eciesHostKeys struct {
-	recipientUncompressed [65]byte
-	ephemeralScalar       [32]byte
-	recipientLo           *big.Int
-	recipientHi           *big.Int
-	ephemeralLo           *big.Int
-	ephemeralHi           *big.Int
-	sharedSecret          *big.Int
-}
-
-func compressP256(uncompressed []byte) []byte {
-	out := make([]byte, 33)
-	out[0] = 2 + (uncompressed[64] & 1)
-	copy(out[1:], uncompressed[1:33])
-	return out
+	recipientPublicKey [32]byte
+	ephemeralScalar    [32]byte
+	recipientLo        *big.Int
+	recipientHi        *big.Int
+	ephemeralLo        *big.Int
+	ephemeralHi        *big.Int
+	sharedSecret       *big.Int
 }
 
 func packBytes32(bytes []byte) (*big.Int, *big.Int) {
 	return new(big.Int).SetBytes(bytes[:31]), new(big.Int).SetBytes(bytes[31:32])
 }
 
-func packBytes33(bytes []byte) (*big.Int, *big.Int) {
-	return new(big.Int).SetBytes(bytes[:31]), new(big.Int).SetBytes(bytes[31:33])
-}
-
 func newEciesHostKeys(t testing.TB) eciesHostKeys {
 	t.Helper()
-	curve := ecdh.P256()
+	curve := ecdh.X25519()
 	recipientScalar := make([]byte, 32)
 	recipientScalar[31] = 0x2b
 	ephemeralScalar := make([]byte, 32)
@@ -62,9 +51,9 @@ func newEciesHostKeys(t testing.TB) eciesHostKeys {
 	}
 	var keys eciesHostKeys
 	copy(keys.ephemeralScalar[:], ephemeralScalar)
-	copy(keys.recipientUncompressed[:], recipientSk.PublicKey().Bytes())
-	keys.recipientLo, keys.recipientHi = packBytes33(compressP256(recipientSk.PublicKey().Bytes()))
-	keys.ephemeralLo, keys.ephemeralHi = packBytes33(compressP256(ephemeralSk.PublicKey().Bytes()))
+	copy(keys.recipientPublicKey[:], recipientSk.PublicKey().Bytes())
+	keys.recipientLo, keys.recipientHi = packBytes32(recipientSk.PublicKey().Bytes())
+	keys.ephemeralLo, keys.ephemeralHi = packBytes32(ephemeralSk.PublicKey().Bytes())
 	dhLo, dhHi := packBytes32(dh)
 	keys.sharedSecret = mustPoseidon(t,
 		SecretTagValue(MergeSecretTag),
@@ -89,7 +78,7 @@ func hostAESCtr(t testing.TB, key, nonce, plaintext []byte) []byte {
 
 type envelopeCircuit struct {
 	EphemeralSk [ScalarBytes]frontend.Variable
-	RecipientPk [UncompressedPointBytes]frontend.Variable
+	RecipientPk [PublicKeyBytes]frontend.Variable
 	Plaintext   [eciesPlaintextBytes]frontend.Variable
 	RecipientLo frontend.Variable                      `gnark:",public"`
 	RecipientHi frontend.Variable                      `gnark:",public"`
@@ -134,7 +123,7 @@ func envelopeAssignment(t testing.TB) *envelopeCircuit {
 	for i, b := range keys.ephemeralScalar {
 		a.EphemeralSk[i] = b
 	}
-	for i, b := range keys.recipientUncompressed {
+	for i, b := range keys.recipientPublicKey {
 		a.RecipientPk[i] = b
 	}
 	for i := range plaintext {
@@ -163,7 +152,7 @@ func TestEnvelopeRejectsTamperedCiphertext(t *testing.T) {
 }
 
 func TestEnvelopeRejectsForeignRecipient(t *testing.T) {
-	other, err := ecdh.P256().NewPrivateKey(append(make([]byte, 31), 0x2c))
+	other, err := ecdh.X25519().NewPrivateKey(append(make([]byte, 31), 0x2c))
 	if err != nil {
 		t.Fatal(err)
 	}

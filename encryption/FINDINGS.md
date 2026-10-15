@@ -1,7 +1,6 @@
-# AES-256-CTR and the P-256 ECIES envelope
+# AES-256-CTR and the X25519 ECIES envelope
 
-Notes on [`aes`](aes), [`kdf.go`](kdf.go) and [`ecies.go`](ecies.go), which were
-extracted from the Zolana prover (`prover/server/circuits/verifiable-encryption`, commit
+The AES and KDF gadgets were extracted from the Zolana prover (`prover/server/circuits/verifiable-encryption`, commit
 `18ac9ffa1`). All counts are BN254 R1CS from gnark v0.16.3. Proving times are in
 [`../BENCHMARKS.md`](../BENCHMARKS.md).
 
@@ -11,14 +10,12 @@ extracted from the Zolana prover (`prover/server/circuits/verifiable-encryption`
 | --- | --- |
 | `aes.NewCipher(api, key).CTREncrypt(nonce, plaintext)` | AES-256-CTR on the spread-lane lookup path. Lookup tables are shared across ciphers through the compiler's key-value store. |
 | `encryption.KeySchedule` | Zolana's Poseidon key schedule, from a field element to a 32-byte key and a 12-byte nonce. |
-| `encryption.Envelope{...}.Seal(api)` | P-256 key agreement, Poseidon transcript, key schedule and AES-256-CTR. |
+| `encryption.Envelope{...}.Seal(api)` | X25519 key agreement, Poseidon transcript, key schedule and AES-256-CTR. |
 
 The `aes` package is copied from Zolana's `verifiable-encryption/aes` (zolana
 commit `51fb595db`) without its Lean-extraction hooks; the circuit is unchanged.
-This repository keeps only the lookup path. The pure-R1CS AES, the legacy
-T-table AES, the gnark std envelope baseline (`StdEnvelope`, `LegacyKeySchedule`)
-and the counter modes were not carried over; their sections below are historical
-measurements.
+This repository keeps the lookup path. The pure-R1CS AES section below
+preserves historical measurements of an implementation outside this repository.
 
 The counter follows the GCM convention: `J0 = nonce || 00000001`, and block `b`
 (zero-based) encrypts `nonce || be32(b + 2)`. A host gets the same keystream from
@@ -142,95 +139,26 @@ canonicity argument is needed.
 
 `Envelope{SecretTag, KdfInfo, EphemeralSk, RecipientPk, Plaintext}.Seal(api)`:
 
-1. `p256.AgreeKey(api, ephemeralSk, recipientPk)`. This checks that
-   `recipientPk` is a canonical uncompressed point on the curve
-   (`0x04 || X || Y`). It computes `E = sk·G` and the shared point `sk·R`.
-2. Packing, where `compressed(P) = (0x02 | y_parity) || be32(x)` is 33 bytes:
-   - `RecipientLo = int_be(c_R[0:31])`, `RecipientHi = int_be(c_R[31:33])` (16 bits)
-   - `EphemeralLo = int_be(c_E[0:31])`, `EphemeralHi = int_be(c_E[31:33])`
-   - `SharedLo = int_be(x_shared[0:31])`, `SharedHi = x_shared[31]`
+1. `x25519.AgreeKey(api, ephemeralSk, recipientPk)` clamps the scalar,
+   decodes the recipient per RFC 7748, derives the ephemeral public key and
+   computes ECDH. Both inputs contain 32 bytes. All-zero shared secrets are
+   rejected. Curve/twist inputs and noncanonical peer aliases are accepted.
+2. Each 32-byte encoding is packed as `Lo = int_be(encoded[0:31])` and
+   `Hi = encoded[31]`. Recipient packing binds the original input bytes,
+   including the ignored high bit. Ephemeral and shared encodings are
+   canonical little-endian X25519 coordinates.
 3. Transcript: `s = Poseidon(int_be(SecretTag), SharedLo, SharedHi, EphemeralLo,
    EphemeralHi, RecipientLo, RecipientHi)`. The merge uses `MergeSecretTag = "TMES"`.
 4. `key, nonce = KeySchedule(s, KdfInfo)`, then
    `ciphertext = AES-256-CTR(key, nonce, plaintext)` with the counter above.
 
-`Sealed` returns the four key packings, `SharedSecret` and the ciphertext bytes. The
-caller must bind them in its public input: at least the recipient packing, the
-ephemeral packing and the ciphertext. The gadget does not range-check plaintext
-bytes, so the caller ties them to its own decomposition. The Zolana merge packs
-`[RecipientLo, EphemeralLo, RecipientHi·2^(8(2+h)) + EphemeralHi·2^(8h) + ct[0:h],
-then ct[h:] in 31-byte chunks]` with `h = min(27, len(ct))`. A host decrypts with
-`crypto/ecdh` (recipient secret × ephemeral point), the same packing and Poseidon
-calls, and `crypto/aes` CTR. `ecies_test.go` runs this mirror. It also rejects a tampered
-ciphertext and a foreign recipient key, and asserts one BSB22 commitment.
+`Sealed` returns the four key packings, `SharedSecret` and ciphertext bytes.
+The caller must bind the recipient packing, ephemeral packing and ciphertext
+in its public inputs and range-check plaintext bytes through its own
+decomposition. A host mirrors the format with `crypto/ecdh.X25519`, the
+same byte packing, Poseidon and `crypto/aes` CTR. The envelope tests check
+host agreement, tampered ciphertext, foreign recipients and one BSB22 commitment.
 
-Cost (gnark v0.16.4, `go run ./cmd/benchmark`): key agreement 25,359 + AES-CTR
-6,830 + 2,866 for the transcript and key schedule (one 7-input Poseidon, four
-Poseidon calls and three 256-bit decompositions) gives 35,055 at 16 B. At 40 B
-the total is 37,727 and at 48 B it is 37,802.
-
-### gnark std baseline
-
-> Not part of this repository; kept as a historical measurement.
-
-`StdEnvelope{SecretTag, KdfInfo, EphemeralSk, RecipientPk, Plaintext}.Seal(api)`
-is the same pipeline with the key agreement and the KDF replaced by what
-existed before the vendored arithmetic: the key agreement is
-[`p256/std`](../p256/std/keyagreement.go) on `sw_emulated` with the
-two-assertion fake-GLV fix (see [`p256/FINDINGS.md`](../p256/FINDINGS.md)),
-the KDF is `LegacyKeySchedule` (the custom-ring `KeySchedule`: silo, two key
-halves and the nonce from four Poseidon calls, each output decomposed with a
-256-bit `ToBinary`, about 2,490 constraints against 745 for the stream KDF,
-kept because it needs no hints and no canonicity argument of its own), and
-the cipher is the spread-lane AES, the same gadget the vendored envelope uses.
-With the T-table `aes.CTREncrypt` instead, at about 22.6k per block, the std
-envelope measured 174,364 / 219,562 / 219,842 at 16 / 40 / 48 B. The
-transcript, the packing and the `Sealed` outputs are identical, so a host
-mirror only swaps the KDF; `ecies_std_test.go` runs it, rejects a tampered
-ciphertext and a foreign recipient, replays the report's forgery through the
-whole envelope and asserts one commitment.
-
-| Envelope | 16 B | 40 B | 48 B |
-| --- | ---: | ---: | ---: |
-| vendored, lookup | 38,387 | 41,059 | 41,134 |
-| vendored, no lookup | 163,606 | 199,530 | 200,214 |
-| gnark std key agreement, legacy KDF, spread AES | 155,515 | 158,187 | 158,262 |
-
-The std row's key agreement is 145,819 of that, so the whole gap to the
-vendored envelope is the field arithmetic: 4x at one block, and on wires
-(239,468 against about 50k) about 5x. The 40 B rows are the merge-mask size.
-`algopts.WithIncompleteArithmetic()` would take gnark's `ScalarMul` to about
-92.5k but is not used: the ladder's incomplete additions divide by x2 - x1
-unchecked, its operands include the hinted result, and the distinct-x guards
-the vendored ladder adds cannot be added from outside gnark's API.
-
-## Comparison with the counter modes
-
-> Not part of this repository; kept as a historical measurement.
-
-From `BENCHMARKS.md`, x1, BN254 Groth16. The counter modes encrypt the 40-byte merge
-mask (elements of 8, 31 and 1 bytes) under a field-element key. AES encrypts raw
-bytes under a 32-byte key and a 12-byte nonce.
-
-| Keystream | Plaintext | Commitment | Constraints |
-| --- | --- | --- | ---: |
-| Poseidon (`FieldCtr`) | 3 elements | no | 876 |
-| BLAKE3 lookup, `ShortInputs` | 40 B | yes | 5,206 |
-| BLAKE3 lookup, canonical | 40 B | yes | 5,342 |
-| AES-256-CTR spread lookup | 16 B | yes | 6,830 |
-| AES-256-CTR spread lookup | 40 B | yes | 9,502 |
-| AES-256-CTR spread lookup | 48 B | yes | 9,577 |
-| BLAKE3 pure | 40 B | no | 16,340 |
-| AES-256-CTR no lookup | 16 B | no | 25,796 |
-| AES-256-CTR legacy T-table | 16 B | yes | 25,679 |
-| SHA-256 counter mode | 40 B | no | 27,213 |
-| AES-256-CTR no lookup | 40 B | no | 61,720 |
-| AES-256-CTR legacy T-table | 48 B | yes | 71,157 |
-
-Poseidon remains the cheapest by an order of magnitude, but a recipient needs a
-Poseidon implementation. AES with lookups costs about 1.8x BLAKE3 with lookups on the
-merge mask. Unlike BLAKE3, every client platform has a native AES. The fixed table
-cost (about 3.8k) dominates one block, so ten instances share it: x10 at 16 B costs
-33,819, against 68,300 for ten separate circuits. Without lookups, AES is the most
-expensive option beyond one block. Use it only where the verifier cannot handle a
-BSB22 commitment.
+This envelope format uses 32-byte recipient and ephemeral keys. Historical
+P-256 ciphertexts and their public-input packing are incompatible. Current
+constraint counts and proof timings are in [../BENCHMARKS.md](../BENCHMARKS.md).

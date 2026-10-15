@@ -8,11 +8,11 @@ import (
 	"github.com/consensys/gnark/constraint/solver"
 	"github.com/consensys/gnark/frontend"
 
-	"github.com/ananas-block/gnark-circuits/p256/emfield"
+	"github.com/ananas-block/gnark-circuits/internal/emfield"
 )
 
 // The birational map to short Weierstrass form lets the ladder retain lazy
-// coordinates and balanced slopes, like the optimized P-256 gadget. Signed
+// coordinates and balanced slopes. Signed
 // odd digits avoid leading identity points. The joint ladder uses radix four,
 // and fixed-base multiplication uses eight-bit windows. Zero and even
 // scalars are corrected using complete Edwards addition.

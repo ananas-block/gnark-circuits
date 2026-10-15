@@ -10,8 +10,8 @@ import (
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 
+	"github.com/ananas-block/gnark-circuits/internal/emfield"
 	"github.com/ananas-block/gnark-circuits/internal/lookup"
-	"github.com/ananas-block/gnark-circuits/p256/emfield"
 )
 
 func TestRejectsBadSignaturesAndHints(t *testing.T) {

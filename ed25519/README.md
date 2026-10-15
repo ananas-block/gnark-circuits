@@ -27,12 +27,12 @@ The field uses six 43-bit limbs and eleven-bit lookup pieces. Three complete dou
 
 Extended Euclid supplies 127-bit u,v with `u*h=v mod L` and u nonzero. The prime equation becomes `[u]R0+[v]A0=[u*S]B`. A signed radix-four joint ladder uses a prover-selected offset `J=jB`, with j in 1..256; fewer than 256 choices can cause an exceptional intermediate, so every valid signature has a usable offset. Exact native-field alias guards and a final cubic curve check bind the lazy arithmetic. The fixed-base side uses signed eight-bit windows, positive-magnitude tables and packed constant selection. Host witness multiplication uses complete extended coordinates and one final inversion.
 
-This reaches 29,786 constraints for the arithmetic and encoding checks, compared with current P-256 ECDSA at 30,164 and its original 31,013. Complete 32-byte-message verification, including SHA-512, uses 50,678 constraints. P-256 with in-circuit SHA-256 for the same 32-byte message uses 44,258 constraints; complete Ed25519 is 14.5% larger. Both single-instance circuits use a 65,536-point Groth16 domain. The original P-256 row takes an already computed digest. Actual Groth16 proving measurements and batch costs are in [BENCHMARKS.md](BENCHMARKS.md).
+Complete 32-byte-message verification, including SHA-512, uses 50,648 constraints on gnark v0.16.4. Actual Groth16 proving measurements and batch costs are in [../BENCHMARKS.md](../BENCHMARKS.md); [BENCHMARKS.md](BENCHMARKS.md) preserves earlier optimization measurements.
 
 ## Verification
 
 ```sh
-go test ./ed25519 ./hasher ./internal/... ./p256/...
+go test ./ed25519 ./hasher ./internal/... ./x25519/...
 go vet ./...
 go run ./cmd/benchmark -only Ed25519 -runs 5
 ```

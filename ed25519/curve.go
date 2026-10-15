@@ -10,7 +10,7 @@ import (
 	"github.com/consensys/gnark/constraint/solver"
 	"github.com/consensys/gnark/frontend"
 
-	"github.com/ananas-block/gnark-circuits/p256/emfield"
+	"github.com/ananas-block/gnark-circuits/internal/emfield"
 )
 
 func pow2(n int) *big.Int { return new(big.Int).Lsh(big.NewInt(1), uint(n)) }

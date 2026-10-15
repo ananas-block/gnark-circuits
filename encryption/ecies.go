@@ -8,7 +8,7 @@ import (
 	gadget "zolana/prover/circuits/gadget"
 
 	"github.com/ananas-block/gnark-circuits/encryption/aes"
-	"github.com/ananas-block/gnark-circuits/p256"
+	"github.com/ananas-block/gnark-circuits/x25519"
 )
 
 var (
@@ -17,16 +17,16 @@ var (
 )
 
 const (
-	UncompressedPointBytes = 65
-	ScalarBytes            = 32
-	maxTagBytes            = 31
+	PublicKeyBytes = 32
+	ScalarBytes    = 32
+	maxTagBytes    = 31
 )
 
 type Envelope struct {
 	SecretTag   []byte
 	KdfInfo     []byte
 	EphemeralSk [ScalarBytes]frontend.Variable
-	RecipientPk [UncompressedPointBytes]frontend.Variable
+	RecipientPk [PublicKeyBytes]frontend.Variable
 	Plaintext   []frontend.Variable
 }
 
@@ -47,7 +47,7 @@ func SecretTagValue(tag []byte) *big.Int {
 }
 
 func (e Envelope) Seal(api frontend.API) Sealed {
-	agreement := p256.AgreeKey(api, e.EphemeralSk, e.RecipientPk)
+	agreement := x25519.AgreeKey(api, e.EphemeralSk, e.RecipientPk)
 	sharedSecret := gadget.PoseidonHash(api, []frontend.Variable{
 		SecretTagValue(e.SecretTag),
 		agreement.SharedLo, agreement.SharedHi,
