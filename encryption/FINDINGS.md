@@ -1,0 +1,158 @@
+# AES-256-CTR and the X25519 ECIES envelope
+
+All counts are BN254 R1CS from gnark v0.16.3. Proving times are in
+[`../BENCHMARKS.md`](../BENCHMARKS.md).
+
+## Entry points
+
+| API | Use |
+| --- | --- |
+| `aes.NewCipher(api, key).CTREncrypt(nonce, plaintext)` | AES-256-CTR on the spread-lane lookup path. Lookup tables are shared across ciphers through the compiler's key-value store. |
+| `encryption.KeySchedule` | Poseidon key schedule, from a field element to a 32-byte key and a 12-byte nonce. |
+| `encryption.Envelope{...}.Seal(api)` | X25519 key agreement, Poseidon transcript, key schedule and AES-256-CTR. |
+
+This repository keeps the lookup path. The pure-R1CS AES section below
+preserves historical measurements of an implementation outside this repository.
+
+The counter follows the GCM convention: `J0 = nonce || 00000001`, and block `b`
+(zero-based) encrypts `nonce || be32(b + 2)`. A host gets the same keystream from
+Go's `cipher.NewCTR(aes, nonce || 00 00 00 02)`.
+
+## Spread-lane AES (lookup path)
+
+AES is XOR-heavy, and XOR is not native to the field. The lookup path stores every
+table word in *spread* form. Bit `l` of a 32-bit word becomes the digit at position
+`l` in base 6: `spread(w) = sum_l bit_l(w) * 6^l`. An inner-round column adds four
+spread T-table words (`T0[a] + T1[b] + T2[c] + T3[d]`) to the spread round-key word.
+That is an ordinary field sum of five terms. Each digit is at most 5 < 6, so no digit
+carries. The XOR of the five bits is the parity of each digit.
+
+- **Tables (one BSB22 commitment for all of them).** The substitution table has
+  1,280 rows: four 256-row T-table regions plus one 256-row spread S-box region.
+  The byte-spread table has 256 rows. The chunk-parity table has 1,296 rows, mapping
+  a 4-lane base-6 chunk `c < 6^4` to its 4-bit parity nibble.
+- **Lane split.** A hint splits the column sum into 8 chunks of 4 lanes. One row
+  checks the recomposition `sum = sum_k chunk_k * 1296^k`. Each chunk is looked up in
+  the 1,296-row table, which range-checks the chunk and returns its nibble. Each output
+  byte is `nibble_lo + 16 * nibble_hi`, which is linear. This gives **25 constraints
+  per column**: 4 substitution lookups, 8 chunk lookups, the recomposition and the
+  lookup bookkeeping. The figure was measured as the marginal cost of 100 extra
+  columns: 25.02.
+- **Fixed cost.** Tables plus one query cost 3,835 constraints. Adding the AES-256
+  key expansion brings this to 5,302: 52 words, with S-box words taken from the spread
+  S-box region and XORs on the same lane split.
+- **Per block.** The first block costs 1,528 constraints: round 0 on the nonce,
+  round 1, and the cached first-round columns. Each further block costs about 1,374:
+  12 middle rounds × 4 columns × 25, one round-1 column, plaintext spreads and the
+  final round. The counter's high bytes are constant across blocks, so round 0 and
+  columns 1 to 3 of round 1 are computed once (`ctrStream.refreshFirstRound`). Only
+  column 0, which reads counter byte 15, is recomputed per block. The final round
+  folds the spread plaintext byte into the same sum, so the ciphertext comes out of
+  one lane split, and the keystream is never a separate variable.
+- **Totals.** 16 B: 6,830. 40 B: 9,502. 48 B: 9,577. 72 B: 12,250.
+
+### Variants measured and rejected
+
+| AES-256-CTR | 16 B | 48 B |
+| --- | ---: | ---: |
+| Legacy T-table lookups with `ToBinary` XOR (`CTREncrypt`) | 25,679 | 71,157 |
+| Bit-decomposed round keys | 20,203 | 49,451 |
+| Spread base-8 lanes, `ToBinary` split | 14,098 | 25,364 |
+| Spread base-6 lanes, 2-lane chunks (36-row table) | 7,349 | 11,803 |
+| **Spread base-6 lanes, 4-lane chunks (1,296-row table)** | **6,830** | **9,577** |
+
+- **Base 8 with `ToBinary`.** A 3-bit lane also absorbs a sum of five bits without
+  carry, so the parity is the low bit of each lane after a 96-bit `ToBinary` per
+  column. That costs about 97 rows per column against 25 for the lookup split. Base 6
+  is the smallest base that holds the digit 5. It keeps chunk tables small
+  (6^4 = 1,296 against 8^4 = 4,096).
+- **2 versus 4 lanes per chunk.** A 2-lane chunk table has only 36 rows, but it needs
+  16 chunk lookups per column instead of 8. The extra queries cost more than the
+  1,260 table rows saved: +519 at 16 B and +2,226 at 48 B. Five or more lanes
+  (7,776 rows) would grow the fixed cost faster than the per-column saving.
+
+## Pure-R1CS AES (no lookups)
+
+> Not part of this repository; kept as a historical measurement.
+
+`NewAESGadgetWithLookups(api, false)` uses no table and no commitment, so it gives a
+plain Groth16 verifying key. It costs 25,796 constraints at 16 B and 62,404 at 48 B.
+
+- **S-box as a hinted GF(2^8) inverse, 64 rows.** A hint supplies the eight S-box
+  output bits `s`. The circuit derives the inverse `y` from `s` with the inverse affine
+  map, one XOR3 row per bit, and proves `x * y = 1` in GF(2^8), or `y = 0` when
+  `x = 0`. The polynomial product `x(t) * y(t)` is computed by evaluating both at 15
+  integer points (0, ±1, ..., ±7) and interpolating with a constant inverse
+  Vandermonde matrix: 15 multiplications. Karatsuba needs 27 and schoolbook needs 64.
+  Reduction modulo `x^8 + x^4 + x^3 + x + 1` is linear over the integer coefficients.
+  Each reduced coefficient must have parity 0 (or 1 for the constant term when
+  `x != 0`), which is checked with a short bit decomposition of half the coefficient.
+  The S-box costs 64 rows, excluding the 9-row input decomposition and the output
+  equality (74 in total as measured).
+- **Alternatives.** Hinting the inverse instead of the S-box bits costs 82 rows with
+  the linear layer fused or with the output bits settled. A one-hot mux (64 flags over
+  the low 6 bits, with the top 2 bits as selectors) costs **87** rows. Key expansion
+  costs 5,249 constraints with the default method and 6,882 with the mux. The test
+  suite asserts that the default is the cheapest method.
+- **Single-row XOR3.** For bits `a, b, c`, the gadget computes
+  `r = (6a + 6b - 24c) / (a + b - 4c + 1)` with one `DivUnchecked` row, then
+  `a ⊕ b ⊕ c = r - 2a - 2b - 7c`. The denominator is never zero on bits. Longer XORs
+  use XOR3 chains, or a hinted parity with a short range proof when that is cheaper.
+- **Symbolic linear layer.** Bytes are carried as XOR forms: sorted sets of bit ids
+  plus a constant flip. ShiftRows, MixColumns, AddRoundKey and the S-box affine map are
+  operations on these forms. A form becomes a real variable ("settled") only when an
+  S-box needs its bits. Settled forms are memoised.
+- **Unmaterialized keystream.** In CTR mode the plaintext byte is XORed into the
+  final-round form, and only the ciphertext bits are settled. Counter bytes are
+  constants, so they never cost rows.
+
+## Key schedule
+
+`KeySchedule(api, s, info)` turns a field element `s` into an AES-256 key and a CTR nonce. `info` is a
+compile-time label of at most 434 bytes; its final 31-byte chunk must not start
+with zero, so labels of different lengths cannot pack to the same field
+elements. The merge uses `MergeKdfInfo = "TMEC"`.
+
+Host derivation (BN254 scalar field `r`, Poseidon):
+
+```
+info_k = int_be(info[31k : 31k+31])        # 31-byte big-endian chunks
+silo   = Poseidon(0x544d5349, s, info_0, info_1, ...)
+lo     = be32(Poseidon(0x544d534b, silo))
+hi     = be32(Poseidon(0x544d534c, silo))
+nonce  = be32(Poseidon(0x544d534e, silo))[20:32]
+key    = hi[16:32] || lo[16:32]
+```
+
+Here `be32(v)` is the 32-byte big-endian encoding of the canonical integer
+`v < r`. Each Poseidon output is decomposed with a 256-bit `ToBinary`, which
+gnark constrains to the canonical representation, so no hint or separate
+canonicity argument is needed.
+
+## ECIES envelope
+
+`Envelope{SecretTag, KdfInfo, EphemeralSk, RecipientPk, Plaintext}.Seal(api)`:
+
+1. `x25519.AgreeKey(api, ephemeralSk, recipientPk)` clamps the scalar,
+   decodes the recipient per RFC 7748, derives the ephemeral public key and
+   computes ECDH. Both inputs contain 32 bytes. All-zero shared secrets are
+   rejected. Curve/twist inputs and noncanonical peer aliases are accepted.
+2. Each 32-byte encoding is packed as `Lo = int_be(encoded[0:31])` and
+   `Hi = encoded[31]`. Recipient packing binds the original input bytes,
+   including the ignored high bit. Ephemeral and shared encodings are
+   canonical little-endian X25519 coordinates.
+3. Transcript: `s = Poseidon(int_be(SecretTag), SharedLo, SharedHi, EphemeralLo,
+   EphemeralHi, RecipientLo, RecipientHi)`. The merge uses `MergeSecretTag = "TMES"`.
+4. `key, nonce = KeySchedule(s, KdfInfo)`, then
+   `ciphertext = AES-256-CTR(key, nonce, plaintext)` with the counter above.
+
+`Sealed` returns the four key packings, `SharedSecret` and ciphertext bytes.
+The caller must bind the recipient packing, ephemeral packing and ciphertext
+in its public inputs and range-check plaintext bytes through its own
+decomposition. A host mirrors the format with `crypto/ecdh.X25519`, the
+same byte packing, Poseidon and `crypto/aes` CTR. The envelope tests check
+host agreement, tampered ciphertext, foreign recipients and one BSB22 commitment.
+
+This envelope format uses 32-byte recipient and ephemeral keys. Historical
+P-256 ciphertexts and their public-input packing are incompatible. Current
+constraint counts and proof timings are in [../BENCHMARKS.md](../BENCHMARKS.md).
