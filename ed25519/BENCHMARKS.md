@@ -1,5 +1,8 @@
 # Ed25519 historical benchmarks
 
+These historical measurements predate the stricter canonical prime-subgroup and
+curve checks. Current 32-byte-message verification uses 58,232 constraints.
+
 These measurements predate the X25519 migration; P-256 is no longer included.
 The current benchmark report is [../BENCHMARKS.md](../BENCHMARKS.md).
 

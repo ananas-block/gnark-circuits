@@ -1,0 +1,5 @@
+ok  	github.com/ananas-block/gnark-circuits/ed25519	113.392s
+ok  	github.com/ananas-block/gnark-circuits/internal/emfield	1.868s
+ok  	github.com/ananas-block/gnark-circuits/internal/lookup	0.641s
+?   	github.com/ananas-block/gnark-circuits/internal/r1c	[no test files]
+?   	github.com/ananas-block/gnark-circuits/internal/shortw	[no test files]

@@ -5,7 +5,7 @@ with measured Groth16 costs.
 
 ## Packages
 
-- [`ed25519`](ed25519): Solana Ed25519 precompile signature verification with in-circuit SHA-512, six 43-bit limbs, lookup range checks, constrained torsion splits and a 127-bit joint checker; 50,648 constraints including SHA-512 for a 32-byte message (gnark v0.16.4).
+- [`ed25519`](ed25519): Canonical prime-subgroup Ed25519 signature verification with in-circuit SHA-512, six 43-bit limbs, lookup range checks, constrained torsion splits and a 127-bit joint checker; 58,232 constraints including SHA-512 for a 32-byte message (gnark v0.16.4).
 - [`x25519`](x25519): RFC 7748 ECDH and key agreement, with scalar clamping, curve/twist inputs, canonical output and all-zero secret rejection. Uses BSB22 lookups.
 - [`encryption`](encryption): an X25519 ECIES envelope (`Envelope.Seal`): key agreement, a Poseidon transcript, a Poseidon key schedule and AES-256-CTR on spread-lane lookup tables ([`encryption/aes`](encryption/aes)); a host reproduces it with `crypto/ecdh` and `crypto/aes`. Design and costs in [`encryption/FINDINGS.md`](encryption/FINDINGS.md).
 - [`hasher`](hasher): the SHA-512 gadget used by Ed25519.

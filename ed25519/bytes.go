@@ -77,6 +77,9 @@ func (c *curve) byteElement(f *emfield.Field, data []frontend.Variable, totalBit
 		consumed += count
 		carry = next
 	}
+	if consumed != len(data) {
+		panic("ed25519: byte layout leaves bytes unbound")
+	}
 	return f.Bounded(limbs, widths)
 }
 func byteLimbsHint(_ *big.Int, in, out []*big.Int) error {

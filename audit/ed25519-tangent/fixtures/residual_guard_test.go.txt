@@ -1,0 +1,81 @@
+package ed25519
+
+import (
+	"fmt"
+	"math/big"
+	"sync/atomic"
+	"testing"
+
+	"github.com/consensys/gnark-crypto/ecc"
+	"github.com/consensys/gnark/constraint/solver"
+	"github.com/consensys/gnark/frontend"
+	"github.com/consensys/gnark/frontend/cs/r1cs"
+)
+
+// Run against the actual production helper with only its new tangent block
+// removed. The old exact slope guards remain enabled at every iteration.
+type residualAuditCircuit struct {
+	Steps    int  `gnark:"-"`
+	Terminal bool `gnark:"-"`
+}
+
+func (v *residualAuditCircuit) Define(api frontend.API) error {
+	c := newCurve(api)
+	start := hostMont(hostMul(generator(), big.NewInt(4)))
+	acc := &montPoint{x: c.fp.Const(start.x), y: c.fp.Const(start.y)}
+	for i := 0; i < v.Steps; i++ {
+		multiple := int64(31 + 2*i)
+		if i == 0 {
+			multiple = 8
+		} // The first chord is coincident: T=2P.
+		table := hostMont(hostMul(generator(), big.NewInt(multiple)))
+		acc = c.quadrupleAddChecked(acc, &montPoint{x: c.fp.Const(table.x), y: c.fp.Const(table.y)})
+	}
+	if v.Terminal {
+		c.assertMontOnCurve(c.montReduce(acc))
+	}
+	return nil
+}
+func TestResidualTerminalRejectsForgedChord(t *testing.T) {
+	for _, steps := range []int{1, 2, 3, 63} {
+		for _, terminal := range []bool{false, true} {
+			// An unanchored 63-step output adds no new negative control.
+			if !terminal && steps != 1 {
+				continue
+			}
+			t.Run(fmt.Sprintf("steps%d/terminal%v", steps, terminal), func(t *testing.T) {
+				template := &residualAuditCircuit{Steps: steps, Terminal: terminal}
+				cs, err := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, template)
+				if err != nil {
+					t.Fatal(err)
+				}
+				witness, err := frontend.NewWitness(template, ecc.BN254.ScalarField())
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := cs.IsSolved(witness); err != nil {
+					t.Fatalf("honest witness: %v", err)
+				}
+				var calls atomic.Int32
+				forge := func(q *big.Int, in, out []*big.Int) error {
+					if calls.Add(1) == 1 {
+						for _, v := range out {
+							v.SetInt64(0)
+						}
+						return nil
+					}
+					return montSlopeHint(q, in, out)
+				}
+				err = cs.IsSolved(witness, solver.OverrideHint(solver.GetHintID(montSlopeHint), forge))
+				if calls.Load() == 0 {
+					t.Fatal("forged slope was not exercised")
+				}
+				if terminal {
+					requireConstraintRejection(t, err)
+				} else if err != nil {
+					t.Fatalf("unanchored control must accept the forged output: %v", err)
+				}
+			})
+		}
+	}
+}

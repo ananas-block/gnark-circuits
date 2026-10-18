@@ -19,11 +19,15 @@ var montA = new(big.Int).Mod(new(big.Int).Sub(big.NewInt(1), new(big.Int).Mul(bi
 
 func (c *curve) montFromEd(p *point) *montPoint {
 	fp := c.fp
+	p = &point{x: fp.EvalProjected(emfield.T(1, p.x)), y: fp.EvalProjected(emfield.T(1, p.y))}
 	out := fp.Hint(montFromEdHint, 2, nil, p.x, p.y)
 	u := fp.Sub(out[0], fp.Const(montOffset))
 	fp.AssertZeroProjected(emfield.T(1, u, fp.Sub(c.one, p.y)), emfield.T(-1, c.one), emfield.T(-1, p.y))
 	fp.AssertZeroProjected(emfield.T(1, out[1], p.x), emfield.T(-1, fp.Const(montScale), u))
-	return &montPoint{out[0], out[1]}
+	// Target membership closes the order-two input's exceptional 0/0 map.
+	result := &montPoint{out[0], out[1]}
+	c.assertMontOnCurve(result)
+	return result
 }
 func (c *curve) edFromMont(p *montPoint) *point {
 	fp := c.fp
@@ -31,7 +35,10 @@ func (c *curve) edFromMont(p *montPoint) *point {
 	u := fp.Sub(p.x, fp.Const(montOffset))
 	fp.AssertZeroProjected(emfield.T(1, out[1], fp.Add(u, c.one)), emfield.T(-1, u), emfield.T(1, c.one))
 	fp.AssertZeroProjected(emfield.T(1, out[0], p.y), emfield.T(-1, fp.Const(montScale), u))
-	return &point{x: out[0], y: out[1]}
+	// Target membership prevents an exceptional denominator freeing a coordinate.
+	result := &point{x: out[0], y: out[1]}
+	c.assertOnCurve(result)
+	return result
 }
 func (c *curve) montReduce(p *montPoint) *montPoint {
 	reduce := func(e *emfield.Element) *emfield.Element {

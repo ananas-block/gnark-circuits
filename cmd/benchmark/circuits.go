@@ -54,7 +54,7 @@ func rows() []row {
 	return []row{
 		rowOf(sectionHasher, "SHA-512 lookup, 64 B message (one compression)", buildSha512(64)),
 		rowOf(sectionHasher, "SHA-512 lookup, 128 B message (two compressions)", buildSha512(128)),
-		rowOf(sectionEd25519, "Ed25519 verification + SHA-512, 32 B message (Solana)", buildEd25519(32)),
+		rowOf(sectionEd25519, "Ed25519 verification + SHA-512, 32 B message (canonical prime subgroup)", buildEd25519(32)),
 		rowOf(sectionX25519, "X25519 ECDH, lookup", buildX25519ECDH()),
 		rowOf(sectionX25519, "X25519 key agreement (AgreeKey), lookup", buildX25519AgreeKey()),
 		rowOf(sectionEncryption, "AES-256-CTR spread lookup, 16 B (Cipher.CTREncrypt)", buildAESCtr(16)),

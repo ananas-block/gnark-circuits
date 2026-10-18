@@ -16,6 +16,10 @@ the packed recipient and ephemeral keys and the ciphertext bytes.
 Ed25519 rows expose the original public-key and message bytes and keep the
 signature private; SHA-512 of R || public key || message is in the circuit.
 
+The Ed25519 measurements below predate the canonical prime-subgroup and additional
+curve checks. Current 32-byte-message verification uses 58,232 constraints; rerun
+the benchmark to refresh proving times and batch costs.
+
 ## 2026-10-15 16:12 UTC — bf92bcd+dirty — Apple M5 Pro — gnark v0.16.4
 
 ### Hasher

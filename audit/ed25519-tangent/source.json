@@ -1,0 +1,14 @@
+{
+  "commit": "191d3b98021599e61dc89ae4f34fd734b4803008",
+  "sha256": {
+    "ed25519/short.go": "1cd0f7f20f7d0fe4d9f3034e71c122fe7280972ac0bd52f6e7124c1a702ff2d7",
+    "ed25519/montgomery.go": "6809230b63250733b4b0baf0a19ee57ee9f41d02fa97a58d077402ee8dbeabe3",
+    "ed25519/verify.go": "acd4a293367e306807d12077975c040c92c1b4d2546b76050890943ce273a7c6",
+    "internal/emfield/plain.go": "37cc7bb781d432b05f77bf7bdadd2c05650da8286624409534071d0e6b572423",
+    "internal/emfield/projected.go": "b39d80ed9953091a161e9b7e0239c2ff07e7d2641138e61ac0dd2d37ee223047",
+    "internal/emfield/layout.go": "2f8d14ada681ce1e0e75142690cd135483bafa8eda7f3158adeb634223c367a2",
+    "internal/r1c/assert.go": "77d1c6b56d0843a4dcc44d109d79d683403b66cb2fa3171583f7fa059d8b8103",
+    "internal/lookup/table.go": "42b6a63203bbe2857cca9e8e1e04686f910de82f249c8e688bbb1ded4f073a63",
+    "go.mod": "708208ca2c2feb2d43b4b124751e8c25f881bd9afe96352afaed3a422afc24d8"
+  }
+}

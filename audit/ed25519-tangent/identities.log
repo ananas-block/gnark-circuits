@@ -1,0 +1,8 @@
+table residual: exact polynomial identity
+output residual: exact polynomial identity
+terminal residual: exact polynomial identity
+output x guard: exact polynomial identity
+coincident tangent: exact polynomial identity
+doubling residual: exact polynomial identity
+balanced slopes and native carry lifts: exact integer inequalities hold
+curve discriminant: nonzero

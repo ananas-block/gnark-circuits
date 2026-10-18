@@ -13,5 +13,7 @@ cargo run --locked --release --manifest-path ed25519/testdata/oracle/Cargo.toml 
 cargo run --locked --release --manifest-path ed25519/testdata/oracle/Cargo.toml --bin scalars > ed25519/testdata/scalars-dalek-4.1.3.json
 ```
 
-The verification predicate compares decoded R points, permitting noncanonical
-point encodings. The message hash always uses the original encoded bytes.
+The test-only reference predicate compares decoded R points, permitting
+noncanonical point encodings. Production `Verify` additionally requires canonical
+nonidentity prime-subgroup points for both the public key and R. Both predicates
+hash the original encoded bytes.

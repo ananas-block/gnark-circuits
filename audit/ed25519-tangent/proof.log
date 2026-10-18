@@ -1,0 +1,2 @@
+Ed25519 verification + SHA-512, 32 B message (canonical prime subgroup) x1: 51,045 constraints, BSB22 yes, prove 269.4 ms
+wrote /var/folders/b8/pz1xrqt11fx0fj3vz0v37pqh0000gn/T/gnark-tangent-audit-zu27exvi/proof.md in 4s

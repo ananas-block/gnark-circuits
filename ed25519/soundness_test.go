@@ -67,7 +67,7 @@ func TestRejectsBadSignaturesAndHints(t *testing.T) {
 			}
 		})
 	}
-	hints := []solver.Hint{decompressHint, byteLimbsHint, lowSplitHint, torsionIndexHint, torsionRootHint, torsionQuotientHint, shortScalarsHint, shortRecodeHint, oddRecodeHint, montFromEdHint, edFromMontHint, montTangentHint, montSlopeHint, montSecondHint, distinctHint, emfield.PlainCheckHint, emfield.BalanceHint, lookup.RowLookupHint, lookup.RowCountHint}
+	hints := []solver.Hint{decompressHint, byteLimbsHint, lowSplitHint, torsionIndexHint, torsionRootHint, shortScalarsHint, shortRecodeHint, oddRecodeHint, montFromEdHint, edFromMontHint, montTangentHint, montSlopeHint, montSecondHint, distinctHint, emfield.PlainCheckHint, emfield.BalanceHint, lookup.RowLookupHint, lookup.RowCountHint}
 	t.Run("offset range", func(t *testing.T) {
 		called := false
 		bad := func(_ *big.Int, _, out []*big.Int) error { called = true; out[0].SetInt64(256); return nil }

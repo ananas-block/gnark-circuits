@@ -151,16 +151,6 @@ func (c *curve) splitTorsion(p *point) (*point, frontend.Variable) {
 	c.assertAdd(prime, t, p)
 	return prime, index
 }
-func (c *curve) assertTorsion(a, r frontend.Variable, hbits []frontend.Variable) {
-	sum := c.api.Add(r, c.api.Mul(a, c.api.FromBinary(hbits[:3]...)))
-	out, err := c.api.Compiler().NewHint(torsionQuotientHint, 1, sum)
-	if err != nil {
-		panic(err)
-	}
-	c.api.ToBinary(out[0], 3)
-	c.api.AssertIsEqual(sum, c.api.Mul(out[0], 8))
-}
-
 func (c *curve) shortVerify(a, r *point, h, s *emfield.Element) {
 	in := append([]frontend.Variable{layout.LimbBits}, h.Limbs()...)
 	widths := []int{}
@@ -268,6 +258,12 @@ func (c *curve) quadrupleAddChecked(p, t *montPoint) *montPoint {
 	diff := fp.Sub(t.x, xd)
 
 	fp.AssertZeroProjected(emfield.T(1, l1, diff), emfield.T(-1, t.y), emfield.T(1, yd))
+	// A coincident chord must use the tangent; the chord equation alone is 0=0.
+	dx := fp.EvalProjected(emfield.T(1, diff))
+	fp.AssertCanonical(dx)
+	equalX := c.api.IsZero(c.api.Add(0, 0, dx.Limbs()...))
+	equal := fp.Bounded([]frontend.Variable{equalX}, []int{1})
+	fp.AssertZeroProjected(emfield.T(2, equal, l1, yd), emfield.T(-3, equal, xd, xd), emfield.T(-1, equal, fp.Const(montA)))
 	x2 := fp.Lazy(emfield.T(1, l1, l1), emfield.T(-1, xd), emfield.T(-1, t.x))
 	mu := fp.HintBalanced(montSecondHint, 1, nil, xd, yd, x2)[0]
 	fp.AssertZeroProjected(emfield.T(1, mu, fp.Sub(x2, xd)), emfield.T(2, l1, diff), emfield.T(-2, t.y))
@@ -311,7 +307,7 @@ func (c *curve) offsetPoints(a, b *point, u, v *emfield.Element) (*point, *point
 }
 
 func init() {
-	solver.RegisterHint(torsionIndexHint, torsionRootHint, torsionQuotientHint, distinctHint, offsetHint)
+	solver.RegisterHint(torsionIndexHint, torsionRootHint, distinctHint, offsetHint)
 }
 func hintInteger(q *big.Int, limbs []*big.Int, bits int) *big.Int {
 	out := new(big.Int)
@@ -354,13 +350,6 @@ func torsionRootHint(q *big.Int, in, out []*big.Int) error {
 		o[1].Set(p.y)
 		return nil
 	})
-}
-func torsionQuotientHint(_ *big.Int, in, out []*big.Int) error {
-	if len(in) != 1 || len(out) != 1 {
-		return errors.New("torsion quotient shape")
-	}
-	out[0].Rsh(in[0], 3)
-	return nil
 }
 func shortRelationHint(q *big.Int, in, out []*big.Int) error {
 	if len(in) < 2 || len(out) != 1+2*shortBits {

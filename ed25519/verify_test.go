@@ -57,6 +57,13 @@ func TestVerify(t *testing.T) {
 	}
 }
 
+type referenceCircuit verifyCircuit
+
+func (v *referenceCircuit) Define(api frontend.API) error {
+	verifyReference(api, Inputs{PublicKey: v.PublicKey, Signature: v.Signature, Message: v.Message})
+	return nil
+}
+
 func TestDalekCCTV(t *testing.T) {
 	data, err := os.ReadFile("testdata/cctv-dalek-1.0.1.json")
 	if err != nil {
@@ -76,13 +83,13 @@ func TestDalekCCTV(t *testing.T) {
 	for _, v := range vectors {
 		cs := compiled[len(v.Msg)]
 		if cs == nil {
-			cs, err = frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &verifyCircuit{Message: make([]frontend.Variable, len(v.Msg))})
+			cs, err = frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &referenceCircuit{Message: make([]frontend.Variable, len(v.Msg))})
 			if err != nil {
 				t.Fatal(err)
 			}
 			compiled[len(v.Msg)] = cs
 		}
-		w := &verifyCircuit{Message: make([]frontend.Variable, len(v.Msg))}
+		w := &referenceCircuit{Message: make([]frontend.Variable, len(v.Msg))}
 		pk, err := hex.DecodeString(v.Key)
 		if err != nil {
 			t.Fatal(err)
@@ -119,11 +126,11 @@ type coreCircuit struct {
 }
 
 func (v *coreCircuit) Define(api frontend.API) error {
-	verifyDigest(api, v.PublicKey, v.Signature, v.Digest)
+	verifyDigestReference(api, v.PublicKey, v.Signature, v.Digest)
 	return nil
 }
 func TestCoreCost(t *testing.T) {
-	cs, err := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &coreCircuit{})
+	cs, err := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &canonicalCoreCircuit{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -144,6 +151,10 @@ func TestShortVerificationEdgesAndMixedTorsion(t *testing.T) {
 		t.Fatal(err)
 	}
 	cs, err := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &coreCircuit{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	strict, err := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &canonicalCoreCircuit{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -174,6 +185,10 @@ func TestShortVerificationEdgesAndMixedTorsion(t *testing.T) {
 		}
 		if err := cs.IsSolved(wit); err != nil {
 			t.Fatalf("fixture%d torsion%d challenge%s: %v", i, row.Torsion, row.Scalar, err)
+		}
+
+		if accepted := strict.IsSolved(wit) == nil; accepted != (row.Torsion == 0) {
+			t.Fatalf("strict fixture%d torsion%d challenge%s: accepted=%v", i, row.Torsion, row.Scalar, accepted)
 		}
 
 		if row.Scalar == "0000000000000000000000000000000000000000000000000000000000000000" || row.Scalar == "0100000000000000000000000000000000000000000000000000000000000000" {
